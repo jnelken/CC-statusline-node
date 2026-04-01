@@ -16,7 +16,7 @@ Awesome Statusline의 모드를 변경합니다.
 
 ## 모드 종류
 
-### 2.1.0 모드 (3가지)
+### 2.1.1 모드 (3가지)
 
 | 모드 | 줄 수 | 바 크기 | 설명 |
 |------|-------|---------|------|
@@ -28,20 +28,20 @@ Awesome Statusline의 모드를 변경합니다.
 
 | 모드 | 줄 수 | 바 크기 | 설명 |
 |------|-------|---------|------|
-| **legacy-2.0.0** | 5줄 | 20블록 | 비용, 시간, 토큰 수 표시 |
-| **legacy-1.0.2** | 4줄 | 40블록 | 클래식 디자인 |
+| **legacy-2.0.1** | 5줄 | 20블록 | 비용, 시간, 토큰 수 표시 |
+| **legacy-1.0.3** | 4줄 | 40블록 | 클래식 디자인 |
 
 ## 인자 처리
 
 | 인자 | 동작 |
 |------|------|
 | (없음) | 대화형 모드 선택 |
-| `compact` | 2.1.0 Compact 모드로 변경 |
-| `default` | 2.1.0 Default 모드로 변경 |
-| `full` | 2.1.0 Full 모드로 변경 |
+| `compact` | 2.1.1 Compact 모드로 변경 |
+| `default` | 2.1.1 Default 모드로 변경 |
+| `full` | 2.1.1 Full 모드로 변경 |
 | `legacy` | 대화형 Legacy 버전 선택 |
-| `legacy-2.0.0` 또는 `2.0.0` | 2.0.0 Legacy 모드로 변경 |
-| `legacy-1.0.2` 또는 `1.0.2` | 1.0.2 Legacy 모드로 변경 |
+| `legacy-2.0.1` 또는 `2.0.1` | 2.0.1 Legacy 모드로 변경 |
+| `legacy-1.0.3` 또는 `1.0.3` | 1.0.3 Legacy 모드로 변경 |
 | `restore` | 가장 최근 백업에서 복원 |
 
 ## 사용법
@@ -51,8 +51,8 @@ Awesome Statusline의 모드를 변경합니다.
 /awesome-statusline-mode compact      # Compact 모드로 변경
 /awesome-statusline-mode default      # Default 모드로 변경
 /awesome-statusline-mode full         # Full 모드로 변경
-/awesome-statusline-mode legacy-2.0.0 # 2.0.0 Legacy로 변경
-/awesome-statusline-mode legacy-1.0.2 # 1.0.2 Legacy로 변경
+/awesome-statusline-mode legacy-2.0.1 # 2.0.1 Legacy로 변경
+/awesome-statusline-mode legacy-1.0.3 # 1.0.3 Legacy로 변경
 /awesome-statusline-mode restore      # 백업에서 복원
 ```
 
@@ -69,11 +69,11 @@ Awesome Statusline의 모드를 변경합니다.
 
 | 인자 | 소스 스크립트 |
 |------|---------------|
-| `compact` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-compact.sh` |
-| `default` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-default.sh` |
-| `full` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.0-full.sh` |
-| `legacy-2.0.0` / `2.0.0` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.0.0-legacy.sh` |
-| `legacy-1.0.2` / `1.0.2` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.2-legacy.sh` |
+| `compact` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.1-compact.sh` |
+| `default` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.1-default.sh` |
+| `full` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.1.1-full.sh` |
+| `legacy-2.0.1` / `2.0.1` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-2.0.1-legacy.sh` |
+| `legacy-1.0.3` / `1.0.3` | `${CLAUDE_PLUGIN_ROOT}/scripts/awesome-statusline-1.0.3-legacy.sh` |
 
 실행 권한 부여 후 완료 메시지 표시.
 
@@ -87,8 +87,8 @@ AskUserQuestion으로 모드 선택:
 [Compact] - 2줄, 10블록 바, 최소 정보
 [Default (Recommended)] - 2줄, 10블록 바, 균형잡힌 정보
 [Full] - 5줄, 40블록 바, 상세 정보
-[Legacy 2.0.0] - 5줄, 20블록 바, 비용/시간 표시
-[Legacy 1.0.2] - 4줄, 클래식 디자인
+[Legacy 2.0.1] - 5줄, 20블록 바, 비용/시간 표시
+[Legacy 1.0.3] - 4줄, 클래식 디자인
 ```
 
 선택 후 해당 스크립트 복사
@@ -141,7 +141,7 @@ Claude: ✅ Statusline 모드가 **Full**로 변경되었습니다!
 ```
 사용자: /awesome-statusline-mode legacy
 
-Claude: ✅ Statusline 모드가 **Legacy 1.0.2**로 변경되었습니다!
+Claude: ✅ Statusline 모드가 **Legacy 1.0.3**로 변경되었습니다!
 
         📁 스크립트: ~/.claude/awesome-statusline.sh
         🎨 모드: Legacy (4줄, 클래식 디자인)
@@ -155,7 +155,7 @@ Claude: ✅ Statusline 모드가 **Legacy 1.0.2**로 변경되었습니다!
 
 Claude: 어떤 Statusline 모드를 사용하시겠습니까?
 
-        [Compact] [Default (Recommended)] [Full] [Legacy 2.0.0] [Legacy 1.0.2]
+        [Compact] [Default (Recommended)] [Full] [Legacy 2.0.1] [Legacy 1.0.3]
 
 사용자: Full
 
