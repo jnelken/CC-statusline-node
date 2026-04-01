@@ -33,11 +33,15 @@
 
 ---
 
+> **2026-04-02 Update:** v2.1.1 — Updated for Claude Opus 4.6 **1M context window** support. All modes now correctly handle the expanded context capacity.
+
+---
+
 ## 📦 Plugins
 
 | Plugin | Version | Description |
 |--------|---------|-------------|
-| [**Awesome Statusline**](plugins/awesome-statusline) | v2.1.0 | Catppuccin-themed Statusline + Real-time API Monitoring |
+| [**Awesome Statusline**](plugins/awesome-statusline) | v2.1.1 | Catppuccin-themed Statusline + Real-time API Monitoring |
 
 ---
 
@@ -113,7 +117,7 @@ Monitor **Context**, **5H/7D API limits** in real-time with beautiful **Catppucc
 
 ### Full Mode (5 lines, 40-block bar)
 
-The most detailed mode. Shows **session cost**, **elapsed time**, **Git sync status (ahead/behind)**, **virtual environment**, and **exact token count (94k/200k)**. Recommended for users who want complete visibility of their development status on wide terminals.
+The most detailed mode. Shows **session cost**, **elapsed time**, **Git sync status (ahead/behind)**, **virtual environment**, and **exact token count (94k/200k)**. Best suited for wide terminals where you want complete visibility of your development status.
 
 <p align="center">
   <img src="plugins/awesome-statusline/assets/demo-full.png" alt="Full Mode"/>
@@ -142,7 +146,7 @@ The most detailed mode. Shows **session cost**, **elapsed time**, **Git sync sta
 
 ### Default Mode (2 lines, 10-block bar)
 
-A balanced standard mode. Shows **model name**, **output style**, **Git branch/status**, and **Context/5H/7D usage** in 2 lines. Reset times shown concisely as `(12m)`, `(Fri)`. Recommended for most users.
+A balanced mode that packs **model name**, **output style**, **Git branch/status**, and **Context/5H/7D usage** into 2 lines. Reset times shown concisely as `(12m)`, `(Fri)`.
 
 <p align="center">
   <img src="plugins/awesome-statusline/assets/demo-default.png" alt="Default Mode"/>
@@ -196,7 +200,7 @@ Minimal mode showing only essential info. Model names abbreviated to **Opus**, p
 
 ### Legacy Mode (4 lines, classic design)
 
-Classic mode maintaining the original v1.0.2 design. Features 40-block Context bar + 10-block Usage bar combination, **virtual environment** display, and simple 2-stage gradient colors. Recommended for users who prefer the classic design.
+Classic mode maintaining the original v1.0.3 design. Features 40-block Context bar + 10-block Usage bar combination, **virtual environment** display, and simple 2-stage gradient colors.
 
 <p align="center">
   <img src="plugins/awesome-statusline/assets/demo-legacy.png" alt="Legacy Mode"/>
@@ -244,7 +248,7 @@ Classic mode maintaining the original v1.0.2 design. Features 40-block Context b
 
 ## 🌈 Gradient Colors
 
-### 2.1.0 Modes (Compact, Default, Full)
+### 2.1.1 Modes (Compact, Default, Full)
 
 Colors change in 4 stages based on usage:
 
@@ -256,7 +260,7 @@ Colors change in 4 stages based on usage:
 
 > ⚠️ **Red warning at 80%+!** Immediate feedback for usage management
 
-### 1.0.2 Legacy
+### 1.0.3 Legacy
 
 | Bar | 0-50% | 50-100% |
 |-----|-------|---------|
@@ -275,7 +279,7 @@ Colors change in 4 stages based on usage:
 | `/awesome-statusline-start compact` | Install Compact mode directly |
 | `/awesome-statusline-start default` | Install Default mode directly |
 | `/awesome-statusline-start full` | Install Full mode directly |
-| `/awesome-statusline-start legacy` | Install Legacy 1.0.2 directly |
+| `/awesome-statusline-start legacy` | Install Legacy 1.0.3 directly |
 | `/awesome-statusline-start restore` | Restore from backup |
 
 ### `/awesome-statusline-mode` — Change Mode
@@ -326,7 +330,7 @@ Use these commands within Claude Code:
 
 | Item | Description |
 |------|-------------|
-| **Claude Code CLI** | Latest version recommended |
+| **Claude Code CLI** | Latest version |
 | **OS** | macOS / Windows / Linux |
 | **jq** | JSON parsing (auto-installed during setup) |
 

@@ -1,7 +1,7 @@
 # Awesome Statusline
 
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blueviolet)](https://claude.ai/code)
-[![Version](https://img.shields.io/badge/version-2.1.0-blue)](https://github.com/awesomejun/awesome-claude-plugins)
+[![Version](https://img.shields.io/badge/version-2.1.1-blue)](https://github.com/awesomejun/awesome-claude-plugins)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![Awesome Statusline](assets/hero.jpeg)
@@ -10,7 +10,7 @@ Beautiful **Catppuccin-themed statusline** for Claude Code with **5 display mode
 
 ## ✨ Features
 
-- 🎨 **5 Display Modes**: Compact, Default, Full, Legacy 2.0.0, Legacy 1.0.2
+- 🎨 **5 Display Modes**: Compact, Default, Full, Legacy 2.0.1, Legacy 1.0.3
 - 🌈 **Catppuccin Mocha Theme**: Beautiful 4-stage gradient progress bars
 - 📊 **Real-time Monitoring**: Model, Git status, Context usage, API limits (5H/7D)
 - 🔄 **Easy Mode Switching**: `/awesome-statusline-mode` command
@@ -37,19 +37,19 @@ Balanced information display with compact progress bars and short reset times.
 
 Minimal display for narrow terminals or distraction-free coding.
 
-### Legacy 2.0.0 - 5 lines, 20-block bars
+### Legacy 2.0.1 - 5 lines, 20-block bars
 
 5-line display with cost tracking, session duration, and token counts. Uses 20-block progress bars.
 
-### Legacy 1.0.2 - 4 lines, 40-block bars
+### Legacy 1.0.3 - 4 lines, 40-block bars
 
 ![Legacy Mode](assets/demo-legacy.png)
 
-Classic design from version 1.0.2 with simple gradient colors.
+Classic design with simple gradient colors.
 
 ## 🚀 Installation
 
-### Via Marketplace (Recommended)
+### Via Marketplace
 
 ```bash
 # Add marketplace
@@ -74,8 +74,8 @@ claude
 /awesome-statusline-start compact   # Install Compact mode directly
 /awesome-statusline-start default   # Install Default mode directly
 /awesome-statusline-start full      # Install Full mode directly
-/awesome-statusline-start legacy-2.0.0  # Install 2.0.0 Legacy mode
-/awesome-statusline-start legacy-1.0.2  # Install 1.0.2 Legacy mode
+/awesome-statusline-start legacy-2.0.1  # Install 2.0.1 Legacy mode
+/awesome-statusline-start legacy-1.0.3  # Install 1.0.3 Legacy mode
 /awesome-statusline-start restore   # Restore from backup
 ```
 
@@ -85,8 +85,8 @@ claude
 /awesome-statusline-mode compact   # Compact mode
 /awesome-statusline-mode default   # Default mode
 /awesome-statusline-mode full      # Full mode
-/awesome-statusline-mode legacy-2.0.0  # 2.0.0 Legacy mode
-/awesome-statusline-mode legacy-1.0.2  # 1.0.2 Legacy mode
+/awesome-statusline-mode legacy-2.0.1  # 2.0.1 Legacy mode
+/awesome-statusline-mode legacy-1.0.3  # 1.0.3 Legacy mode
 /awesome-statusline-mode restore   # Restore from backup
 
 /awesome-statusline-mode           # Interactive selection
@@ -110,7 +110,7 @@ claude
 
 ## 🌈 Gradient Colors
 
-### 2.1.0 Modes (Compact, Default, Full)
+### 2.1.1 Modes (Compact, Default, Full)
 
 4-stage gradients that change based on usage level:
 
@@ -120,7 +120,7 @@ claude
 | **5H Limit** | Mocha Lavender | Latte Blue | Latte Red |
 | **7D Limit** | Mocha Yellow | Latte Green | Latte Red |
 
-### 1.0.2 Legacy
+### 1.0.3 Legacy
 
 | Bar | 0-50% | 50-100% |
 |-----|-------|---------|

@@ -21,7 +21,7 @@ Awesome Statusline의 모드를 변경합니다.
 | 모드 | 줄 수 | 바 크기 | 설명 |
 |------|-------|---------|------|
 | **compact** | 2줄 | 10블록 | 최소 정보, 좁은 터미널용 |
-| **default** | 2줄 | 10블록 | 균형잡힌 정보, 대부분의 사용자에게 권장 |
+| **default** | 2줄 | 10블록 | 균형잡힌 정보량 |
 | **full** | 5줄 | 40블록 | 상세 정보 (비용, 시간, Git ahead/behind, 토큰 수) |
 
 ### Legacy 모드
@@ -85,7 +85,7 @@ AskUserQuestion으로 모드 선택:
 어떤 Statusline 모드를 사용하시겠습니까?
 
 [Compact] - 2줄, 10블록 바, 최소 정보
-[Default (Recommended)] - 2줄, 10블록 바, 균형잡힌 정보
+[Default] - 2줄, 10블록 바, 균형잡힌 정보량
 [Full] - 5줄, 40블록 바, 상세 정보
 [Legacy 2.0.1] - 5줄, 20블록 바, 비용/시간 표시
 [Legacy 1.0.3] - 4줄, 클래식 디자인
@@ -155,7 +155,7 @@ Claude: ✅ Statusline 모드가 **Legacy 1.0.3**로 변경되었습니다!
 
 Claude: 어떤 Statusline 모드를 사용하시겠습니까?
 
-        [Compact] [Default (Recommended)] [Full] [Legacy 2.0.1] [Legacy 1.0.3]
+        [Compact] [Default] [Full] [Legacy 2.0.1] [Legacy 1.0.3]
 
 사용자: Full
 

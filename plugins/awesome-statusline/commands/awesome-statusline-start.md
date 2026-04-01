@@ -27,7 +27,7 @@ Claude Code의 Awesome Statusline을 설치하는 대화형 마법사입니다.
 | 모드 | 줄 수 | 바 크기 | 설명 |
 |------|-------|---------|------|
 | **Compact** | 2줄 | 10블록 | 최소 정보, 좁은 터미널용 |
-| **Default** | 2줄 | 10블록 | 균형잡힌 정보, 대부분의 사용자에게 권장 |
+| **Default** | 2줄 | 10블록 | 균형잡힌 정보량 |
 | **Full** | 5줄 | 40블록 | 상세 정보 (비용, 시간, Git ahead/behind, 토큰 수) |
 
 ## Legacy 모드 상세
@@ -118,7 +118,7 @@ AskUserQuestion으로 물어봅니다:
 ```
 어떤 버전을 설치하시겠습니까?
 
-[2.1.1 (Recommended)] - 3-mode 시스템, Catppuccin 4단계 그라데이션
+[2.1.1] - 3-mode 시스템, Catppuccin 4단계 그라데이션
 [1.0.3 Legacy] - 클래식 디자인, 2단계 그라데이션
 ```
 
@@ -128,7 +128,7 @@ AskUserQuestion으로 물어봅니다:
 어떤 모드로 시작하시겠습니까?
 
 [Compact] - 2줄, 10블록 바, 최소 정보
-[Default (Recommended)] - 2줄, 10블록 바, 균형잡힌 정보
+[Default] - 2줄, 10블록 바, 균형잡힌 정보량
 [Full] - 5줄, 40블록 바, 상세 정보
 ```
 
@@ -137,7 +137,7 @@ AskUserQuestion으로 물어봅니다:
 ```
 설치 방식을 선택하세요:
 
-[기본 설치 (Recommended)] - 선택한 모드 바로 설치
+[기본 설치] - 선택한 모드 바로 설치
 [커스터마이즈] - 색상, 표시 정보 등 커스텀 설정
 ```
 
@@ -215,19 +215,19 @@ Claude: 안녕하세요! Awesome Statusline 설치 마법사입니다. 🎨
 
         어떤 버전을 설치하시겠습니까?
 
-        [2.1.1 (Recommended)] [1.0.3 Legacy]
+        [2.1.1] [1.0.3 Legacy]
 
 사용자: 2.1.1
 
 Claude: 어떤 모드로 시작하시겠습니까?
 
-        [Compact] [Default (Recommended)] [Full]
+        [Compact] [Default] [Full]
 
 사용자: Full
 
 Claude: 설치 방식을 선택하세요:
 
-        [기본 설치 (Recommended)] [커스터마이즈]
+        [기본 설치] [커스터마이즈]
 
 사용자: 기본 설치
 
