@@ -236,11 +236,18 @@ format_time_remaining() {
     echo "${hours}h${minutes}m"
 }
 
+# Cross-platform date formatting (BSD/macOS vs GNU/Linux)
+_date_fmt() {
+    local epoch="$1" fmt="$2"
+    if date -j -f "%s" "$epoch" "+$fmt" 2>/dev/null; then return; fi
+    date -d "@$epoch" "+$fmt" 2>/dev/null
+}
+
 # Format 7D reset as "Mon"
 format_reset() {
     local reset_epoch="$1"
     [[ -z "$reset_epoch" || "$reset_epoch" == "null" ]] && return
-    date -j -f "%s" "$reset_epoch" "+%a" 2>/dev/null
+    _date_fmt "$reset_epoch" "%a"
 }
 
 # Build Line 4 from rate_limits

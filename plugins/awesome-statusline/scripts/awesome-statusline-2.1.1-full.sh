@@ -300,16 +300,23 @@ format_time_remaining() {
     echo "in ${hours}h${minutes}m"
 }
 
+# Cross-platform date formatting (BSD/macOS vs GNU/Linux)
+_date_fmt() {
+    local epoch="$1" fmt="$2"
+    if date -j -f "%s" "$epoch" "+$fmt" 2>/dev/null; then return; fi
+    date -d "@$epoch" "+$fmt" 2>/dev/null
+}
+
 # Format 7D reset as "Jan 21 at 2pm"
 format_reset_datetime() {
     local reset_epoch="$1"
     [[ -z "$reset_epoch" || "$reset_epoch" == "null" ]] && return
-    local hour=$(date -j -f "%s" "$reset_epoch" "+%H" 2>/dev/null)
+    local hour=$(_date_fmt "$reset_epoch" "%H")
     local hour_12=$((hour % 12))
     [[ $hour_12 -eq 0 ]] && hour_12=12
     local ampm="am"
     [[ $hour -ge 12 ]] && ampm="pm"
-    local month_day=$(date -j -f "%s" "$reset_epoch" "+%b %d" 2>/dev/null)
+    local month_day=$(_date_fmt "$reset_epoch" "%b %d")
     echo "${month_day} at ${hour_12}${ampm}"
 }
 

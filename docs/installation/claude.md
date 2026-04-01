@@ -12,8 +12,13 @@
 # macOS
 which jq || brew install jq
 
-# Linux (Debian/Ubuntu)
+# Linux (Debian/Ubuntu) / WSL
 which jq || sudo apt-get install -y jq
+
+# Windows (PowerShell — winget, choco, or scoop)
+# winget install jqlang.jq
+# choco install jq
+# scoop install jq
 ```
 
 Verify:
