@@ -241,7 +241,7 @@ else
     SEVEN_END_COLOR=$(get_usage_7d_gradient_color 0)
     FIVE_DISPLAY="${C_LAVENDER}5H${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m0%${RESET}"
     SEVEN_DISPLAY="${C_YELLOW}7D${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m0%${RESET}"
-    LINE2="${CTX_DISPLAY} | ${FIVE_DISPLAY} | ${SEVEN_DISPLAY} ${C_OVERLAY}(loads after 1st chat)${RESET}"
+    LINE2="${CTX_DISPLAY} | ${FIVE_DISPLAY} | ${SEVEN_DISPLAY} ${C_OVERLAY}(loading..)${RESET}"
 fi
 
 # ============================================================================
