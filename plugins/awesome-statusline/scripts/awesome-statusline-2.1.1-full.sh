@@ -341,8 +341,8 @@ else
     SEVEN_BAR=$(generate_bar 0 40 "7d")
     FIVE_END_COLOR=$(get_usage_gradient_color 0)
     SEVEN_END_COLOR=$(get_usage_7d_gradient_color 0)
-    LINE4="🚀 $(cat_lavender)5H Limit${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m0%${RESET} $(cat_overlay)(loads after 1st chat)${RESET}"
-    LINE5="🌟 $(cat_yellow)7D Limit${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m0%${RESET} $(cat_overlay)(loads after 1st chat)${RESET}"
+    LINE4="🚀 $(cat_lavender)5H Limit${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m0%${RESET} $(cat_overlay)(loading..)${RESET}"
+    LINE5="🌟 $(cat_yellow)7D Limit${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m0%${RESET} $(cat_overlay)(loading..)${RESET}"
 fi
 
 # ============================================================================
