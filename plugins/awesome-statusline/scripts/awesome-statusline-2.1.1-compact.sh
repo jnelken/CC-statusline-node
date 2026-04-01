@@ -188,7 +188,9 @@ if [[ -n "$FIVE_HOUR_PCT" ]]; then
 
     LINE2="🧠${CTX_BAR} ${C_LAVENDER}5H${RESET}${FIVE_BAR} ${C_YELLOW}7D${RESET}${SEVEN_BAR}"
 else
-    LINE2="🧠${CTX_BAR} ${C_OVERLAY}Usage: N/A${RESET}"
+    FIVE_BAR=$(generate_bar 0 10 "5h")
+    SEVEN_BAR=$(generate_bar 0 10 "7d")
+    LINE2="🧠${CTX_BAR} ${C_LAVENDER}5H${RESET}${FIVE_BAR} ${C_YELLOW}7D${RESET}${SEVEN_BAR} ${C_OVERLAY}(loads after 1st chat)${RESET}"
 fi
 
 # ============================================================================
