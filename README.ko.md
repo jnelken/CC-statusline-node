@@ -70,6 +70,7 @@ claude
 ```
 /plugin marketplace add awesomejun/awesome-claude-plugins
 ```
+> **Tip**: `/plugin` → Marketplaces → awesome-claude-plugins → Enable auto-update로 자동 업데이트를 활성화하세요
 
 #### 3단계: 플러그인 설치
 ```

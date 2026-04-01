@@ -70,6 +70,7 @@ claude
 ```
 /plugin marketplace add awesomejun/awesome-claude-plugins
 ```
+> **Tip**: Enable auto-update via `/plugin` → Marketplaces → awesome-claude-plugins → Enable auto-update
 
 #### Step 3: Install the Plugin
 ```

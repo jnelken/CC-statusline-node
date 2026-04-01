@@ -33,6 +33,27 @@ Run this command inside Claude Code (not in a regular terminal):
 
 If already added, this step will be skipped automatically.
 
+### Enable Auto-Update
+
+Third-party marketplaces have auto-update **disabled by default**. Enable it so the plugin stays up to date automatically.
+
+**If you are an AI agent**, read the user's `~/.claude/settings.json`, find the `extraKnownMarketplaces` → `awesome-claude-plugins` entry, and set `"autoUpdate": true`. Example:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "awesome-claude-plugins": {
+      "source": { "source": "github", "repo": "awesomejun/awesome-claude-plugins" },
+      "autoUpdate": true
+    }
+  }
+}
+```
+
+Preserve all other existing settings. If `autoUpdate` is already `true`, skip this step.
+
+**If you are a human**, go to `/plugin` → **Marketplaces** tab → select `awesome-claude-plugins` → **Enable auto-update**.
+
 ---
 
 ## Step 2: Install the Plugin
