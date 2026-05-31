@@ -1,383 +1,201 @@
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/feature-overview.jpeg" alt="Awesome Statusline" width="100%"/>
-</p>
+<div align="center">
 
-<h1 align="center">Awesome Claude Plugins</h1>
+# ⚡ Awesome Statusline
 
-<p align="center">
-  <strong>🎨 Claude Code를 위한 아름다운 플러그인 마켓플레이스</strong>
-</p>
+**[Claude Code](https://claude.com/claude-code)를 위한 아름다운 상태줄 — 컨텍스트, 사용량 한도, 비용, 추론 강도(`⚡effort`)를 한눈에. macOS·Linux·Windows 한 줄 설치.**
 
-<p align="center">
-  <strong>🇰🇷 한국어</strong> |
-  <a href="README.md">🇺🇸 English</a>
-</p>
+[🇺🇸 English](README.md) · [빠른 설치](#-빠른-설치) · [프리셋](#-5가지-프리셋) · [표시 항목](#-무엇을-보여주나요) · [FAQ](#-faq)
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/hero.jpeg" alt="Awesome Statusline Hero" width="100%"/>
-</p>
+<img src="https://img.shields.io/github/stars/AwesomeJun/CC-statusline?style=flat-square&color=cba6f7" alt="Stars"/>
+<img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-89b4fa?style=flat-square" alt="Platforms"/>
+<img src="https://img.shields.io/badge/theme-Catppuccin-f5c2e7?style=flat-square" alt="Catppuccin"/>
+<img src="https://img.shields.io/badge/deps-auto--installed-a6e3a1?style=flat-square" alt="Zero config"/>
+<img src="https://img.shields.io/badge/license-MIT-fab387?style=flat-square" alt="MIT"/>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Claude%20Code-Plugin%20Marketplace-blueviolet?style=flat-square" alt="Claude Code Plugin Marketplace"/>
-  <img src="https://img.shields.io/badge/theme-Catppuccin%20Mocha-f5c2e7?style=flat-square" alt="Catppuccin Mocha"/>
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"/>
-  <img src="https://img.shields.io/github/stars/awesomejun/awesome-claude-plugins?style=flat-square" alt="GitHub Stars"/>
-</p>
+<br/><br/>
 
-<p align="center">
-  <a href="#-플러그인-목록">플러그인 목록</a> ·
-  <a href="#-빠른-시작">빠른 시작</a> ·
-  <a href="#-awesome-statusline">Awesome Statusline</a> ·
-  <a href="#-마켓플레이스-명령어">마켓플레이스 명령어</a>
-</p>
+<img src="assets/presets/presets.png" alt="5가지 프리셋 — xsmall부터 xlarge까지, ⚡effort와 💡thinking 실시간 표시" width="820"/>
+
+<sub>▶ <a href="https://awesomejun.github.io/CC-statusline/">인터랙티브 라이브 데모</a></sub>
+
+</div>
 
 ---
 
-> **2026-04-02 업데이트:** v2.1.1 — Claude Opus 4.6 **1M context window** 지원 업데이트. 모든 모드에서 확장된 컨텍스트 용량을 올바르게 처리합니다.
+## 🆕 업데이트 소식
+
+Claude Code 최신 기능에 맞춰 계속 업데이트됩니다 — 최근 내역:
+
+| 날짜 | 업데이트 |
+|------|----------|
+| **2026-05-31** | **Opus 4.8** 지원 · 추론 강도 **effort**(`high`/`xhigh`/`max`) + **thinking** 표시 · 크로스플랫폼 한 줄 설치(`jq`/Git Bash 자동설치) · 5단계 프리셋(`xs`–`xl`) · JetBrains Mono |
+| **2026-04-01** | **1M 토큰 컨텍스트 창** 지원(Opus) · 첫 대화 전에도 사용량 바 표시 |
+| **2026-01-19** | 멀티 모드 디스플레이 시스템 · 플러그인 마켓플레이스 |
+| **2026-01-18** | Catppuccin 그래디언트 바 · 실시간 **5시간 / 7일** 사용량 한도 모니터링 |
 
 ---
 
-## 📦 플러그인 목록
+## 왜 이거냐면
 
-| 플러그인 | 버전 | 설명 |
-|---------|------|------|
-| [**Awesome Statusline**](plugins/awesome-statusline) | v2.1.1 | Catppuccin 테마 Statusline + 실시간 API 모니터링 |
+| | Awesome Statusline | 다른 도구들 |
+|---|:---:|:---:|
+| `⚡effort`(high/xhigh/max) + `💡thinking` 표시 | ✅ **유일** | ❌ |
+| 실시간 **5시간 / 7일 사용량** 바 (공식 rate-limit API) | ✅ | 일부 |
+| **Node·Nerd Font 불필요** | ✅ 순수 Bash + 이모지 | ❌ node/폰트 필요 |
+| 의존성 **자동 설치** (`jq`, Git Bash) | ✅ mac · linux · windows | 수동 |
+| **한 단어**로 모양 선택 (`xs`…`xl`) | ✅ 5 프리셋 | 위저드 / TUI |
+
+> Claude Code 공식 상태줄 JSON 기반이라, `⚡effort`는 세션 중 `/effort` 변경(Opus 4.x)을 실시간 반영하고, effort를 지원하지 않는 모델에서는 자동으로 숨겨집니다.
 
 ---
 
-## 🚀 빠른 시작
+## 🚀 빠른 설치
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/install-demo.gif" alt="Installation Demo" width="100%"/>
-</p>
+`jq`나 Git을 미리 깔 필요 없습니다 — 설치 스크립트가 알아서 해줍니다.
 
-### 원라이너 설치 (AI 에이전트용)
-
-Claude Code에 아래 한 줄만 붙여넣으면 에이전트가 알아서 설치합니다:
-
-```
-Read https://raw.githubusercontent.com/awesomejun/awesome-claude-plugins/main/docs/installation/claude.md and follow every step.
-```
-
-### 수동 설치
-
-#### 1단계: Claude Code 실행
+**macOS / Linux**
 ```bash
-claude
+curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xl
 ```
 
-#### 2단계: 마켓플레이스 추가
-```
-/plugin marketplace add awesomejun/awesome-claude-plugins
-```
-> **Tip**: `/plugin` → Marketplaces → awesome-claude-plugins → Enable auto-update로 자동 업데이트를 활성화하세요
-
-#### 3단계: 플러그인 설치
-```
-/plugin install awesome-statusline@awesome-claude-plugins
+**Windows (PowerShell)**
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1))) xl
 ```
 
-#### 4단계: 설치 마법사 실행
-```
-/awesome-statusline-start
-```
-
-> 💡 마법사가 버전 → 모드 → 설치 방식을 단계별로 안내합니다!
-
-> 💖 Statusline이 도움이 됐다면 저장소에 ⭐를 눌러주시면 다른 개발자들도 발견하기 쉬워집니다. GitHub 페이지에서 Star 버튼을 누르거나, `gh api user/starred/awesomejun/awesome-claude-plugins -X PUT`을 실행하시면 됩니다.
-
-
----
-
-## 🎨 Awesome Statusline
-
-<table>
-<tr>
-<td width="60">✨</td>
-<td><strong>코딩할 때 "간지"가 중요하신 분</strong></td>
-</tr>
-<tr>
-<td>😮‍💨</td>
-<td><strong><code>/context</code>, <code>/usage</code> 들어가서 사용량 체크하기 귀찮으신 분</strong></td>
-</tr>
-<tr>
-<td>🖥️</td>
-<td><strong>CLI를 쓰지만 GUI의 갬성을 버릴 수 없는 분</strong></td>
-</tr>
-</table>
-
-> **Awesome Statusline**은 이런 분들을 위해 만들어졌습니다!
-
-**Catppuccin 테마**의 아름다운 그라데이션 프로그레스 바로 **Context**, **5H/7D API 제한**을 실시간으로 모니터링하세요. 더 이상 슬래시 커맨드를 입력할 필요 없이, 터미널 상단에서 한눈에 모든 정보를 확인할 수 있습니다.
-
-### ✨ 주요 기능
-
-| | 기능 | 설명 |
-|:--:|------|------|
-| 🌈 | **Catppuccin 테마** | 아름다운 4단계 그라데이션 프로그레스 바 |
-| 📊 | **실시간 모니터링** | 모델, Git 상태, Context 사용량, API 제한 (5H/7D) |
-| 🔄 | **간편한 모드 전환** | `/awesome-statusline-mode` 명령어로 즉시 변경 |
-| 🎨 | **4가지 디스플레이 모드** | Compact, Default, Full, Legacy |
-| 🛠️ | **커스터마이징** | 쉘 스크립트 기반으로 자유롭게 수정 가능 |
-| 💾 | **자동 백업** | 기존 statusline 자동 백업 및 복원 지원 |
-
----
-
-## 📐 디스플레이 모드
-
-### Full 모드 (5줄, 40블록 바)
-
-가장 상세한 정보를 제공하는 모드입니다. **세션 비용**, **경과 시간**, **Git 동기화 상태(ahead/behind)**, **가상 환경**, 그리고 **정확한 토큰 수(94k/200k)**까지 모든 정보를 한눈에 볼 수 있습니다. 넓은 터미널에서 개발 현황을 완벽하게 파악하고 싶을 때 적합합니다.
-
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-full.png" alt="Full Mode"/>
-</p>
-
+**또는 클론 후 실행** (크기를 생략하면 대화형 선택):
 ```bash
-# 모드 변경
-/awesome-statusline-mode full
+git clone https://github.com/AwesomeJun/CC-statusline.git && cd CC-statusline
+./install.sh            # macOS / Linux
+./install.ps1           # Windows PowerShell
 ```
+
+`xl` 자리에 원하는 크기를 넣으면 됩니다 — 약어·풀네임 둘 다 가능: `xs`/`xsmall`, `s`/`small`, `m`/`medium`, `l`/`large`, `xl`/`xlarge`.
+그다음 Claude Code를 재시작하면 끝입니다.
+
+---
+
+## 📐 5가지 프리셋
+
+한 단어로 정보량을 고릅니다. 작은 것 → 큰 것:
+
+| 크기 | 줄 수 | 한눈에 |
+|------|:-----:|--------|
+| `xsmall` (`xs`) | 2 | 모델 · effort · thinking · 경로 · 브랜치 · 작은 바 3개 |
+| `small` (`s`) | 2 | + 라벨, 퍼센트, 출력 스타일 |
+| `medium` (`m`) | 4 | 클래식 레이아웃, 전체폭 컨텍스트 바 |
+| `large` (`l`) | 5 | + 비용, 세션 시간, 20블록 사용량 바 |
+| `xlarge` (`xl`) | 5 | 전부: git ahead/behind, env, 40블록 바, 리셋 시각 |
 
 <details>
-<summary>📌 Full 모드 상세 설명</summary>
+<summary>📋 텍스트 미리보기 (복사용)</summary>
+<br/>
 
-| 항목 | 표시 | 의미 |
-|------|------|------|
-| `📝 +2 !1` | Git 상태 | 2개 staged, 1개 modified |
-| `↑3` | Ahead | 3커밋 push 필요 |
-| `🐍 base` | 가상 환경 | 활성화된 환경 |
-| `💰 2.47$` | 비용 | 세션 누적 비용 |
-| `⏰ 35m` | 시간 | 세션 경과 시간 |
-| `94k/200k` | 토큰 | 현재/최대 컨텍스트 |
+색상은 실제 터미널에서 렌더됩니다:
+
+```text
+xsmall ─ 2줄
+🤖Opus ⚡high 💡 📂~/project 🌿(main)
+🧠████░░░░░░ 5H████░░░░░░ 7D██░░░░░░░░
+
+small ─ 2줄
+🤖 Opus 4.8 ⚡high 💡 | 🎨 default | 📂 ~/project 🌿(main)
+🧠 Context ████░░░░░░ 43% | 5H ████░░░░░░ 42% | 7D ██░░░░░░░░ 18%
+
+medium ─ 4줄
+🧠 Opus 4.8 ⚡high 💡 | 🚧 dirty | no conda | 🎨 default
+📂 ~/project 🌿(main)
+📝 Context █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used
+🚀 Usage 5H ████░░░░░░ 42% | 7D ██░░░░░░░░ 18%
+
+large ─ 5줄
+🤖 Opus 4.8 ⚡high 💡 | 📝 +5 !12 | 🐍 venv | 🎨 default
+📂 ~/project 🌿(main) | 💰 1.23$ | ⏰ 1h2m
+🧠 Context  █████████░░░░░░░░░░░ 43% used (87k/200k)
+🚀 Usage 5H ████████░░░░░░░░░░░░ 42% (Reset 2h15m left)
+⭐ Usage 7D ████░░░░░░░░░░░░░░░░ 18% (Reset Thu 19:00)
+
+xlarge ─ 5줄
+🤖 Opus 4.8 ⚡high 💡 | 🎨 default | 📝 dirty +5 !12 | 🐍 venv
+📂 ~/project 🌿(main) | 💰 1.23$ | ⏰ 1h2m
+🧠 Context  █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used (87k/200k)
+🚀 5H Limit █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 42% (Resets in 2h15m)
+🌟 7D Limit ███████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 18% (Resets Dec 31 at 7pm)
+```
 
 </details>
 
 ---
 
-### Default 모드 (2줄, 10블록 바)
+## 🎨 무엇을 보여주나요
 
-균형 잡힌 정보량을 2줄에 압축하여 보여주는 모드입니다. **모델명**, **Output Style**, **Git 브랜치/상태**, **Context/5H/7D 사용량**을 모두 포함하며, 리셋 시간도 `(12m)`, `(Fri)` 형태로 간결하게 표시됩니다.
-
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-default.png" alt="Default Mode"/>
-</p>
-
-```bash
-# 모드 변경
-/awesome-statusline-mode default
-```
-
-<details>
-<summary>📌 Default 모드 상세 설명</summary>
-
-| 항목 | 표시 | 의미 |
-|------|------|------|
-| `✅` | Git 상태 | clean (변경 없음) |
-| `38%` | Context | 컨텍스트 사용률 |
-| `89%` | 5H | ⚠️ 5시간 제한 임박! |
-| `(12m)` | 리셋 | 12분 후 5H 리셋 |
-| `(Fri)` | 7D 리셋 | 금요일에 리셋 |
-
-</details>
-
----
-
-### Compact 모드 (2줄, 10블록 바)
-
-최소한의 공간에 핵심 정보만 표시하는 모드입니다. 모델명은 **Opus**처럼 축약되고, 퍼센트 숫자 없이 **프로그레스 바만** 표시됩니다. 좁은 터미널 창이나 화면 분할 환경에서 공간을 절약하면서도 사용량을 시각적으로 파악하고 싶을 때 적합합니다.
-
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-compact.png" alt="Compact Mode"/>
-</p>
-
-```bash
-# 모드 변경
-/awesome-statusline-mode compact
-```
-
-<details>
-<summary>📌 Compact 모드 상세 설명</summary>
-
-| 항목 | 표시 | 의미 |
-|------|------|------|
-| `Opus` | 모델 | 축약 표시 |
-| `📝` | Git | dirty (변경 있음) |
-| 바만 표시 | 사용량 | % 숫자 없이 시각화만 |
-
-</details>
-
----
-
-### Legacy 모드 (4줄, 클래식 디자인)
-
-오리지널 디자인을 유지하는 클래식 모드입니다. 40블록의 넓은 Context 바와 10블록의 Usage 바 조합, **가상 환경** 표시, 그리고 심플한 2단계 그라데이션 색상이 특징입니다.
-
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-legacy.png" alt="Legacy Mode"/>
-</p>
-
-```bash
-# 모드 변경
-/awesome-statusline-mode legacy
-```
-
-<details>
-<summary>📌 Legacy 모드 상세 설명</summary>
-
-| 항목 | 표시 | 의미 |
-|------|------|------|
-| `Sonnet 4` | 모델 | 다른 모델 예시 |
-| `🎨 explanatory` | 스타일 | Output Style |
-| `73%` | Context | 컨텍스트 사용률 |
-| `(2h31m)` | 5H 리셋 | 2시간 31분 후 |
-| `(Mon)` | 7D 리셋 | 월요일에 리셋 |
-
-</details>
-
----
-
-## 📊 모드 비교
-
-| 기능 | Compact | Default | Full | Legacy |
-|------|:-------:|:-------:|:----:|:------:|
-| **줄 수** | 2 | 2 | 5 | 4 |
-| **바 너비** | 10블록 | 10블록 | 40블록 | 40블록 |
-| **모델명** | 축약 (Opus) | 전체 (Opus 4.5) | 전체 (Opus 4.5) | 전체 (Opus 4.5) |
-| **Output Style** | ❌ | ✅ | ✅ | ✅ |
-| **Git 상태** | ✅ | ✅ | ✅ | ✅ |
-| **Git 세부상태** (+N !N ?N) | ❌ | ❌ | ✅ | ❌ |
-| **Git ↑↓** (ahead/behind) | ❌ | ❌ | ✅ | ❌ |
-| **가상 환경** | ❌ | ❌ | ✅ | ✅ |
-| **세션 비용** (💰) | ❌ | ❌ | ✅ | ❌ |
-| **세션 시간** (⏰) | ❌ | ❌ | ✅ | ❌ |
-| **리셋 시간** | ❌ | 축약 (1h2m) | 전체 | 축약 |
-| **그라데이션 바** | ✅ | ✅ | ✅ | ✅ |
-| **% Bold 색상** | ❌ | ✅ | ✅ | ✅ |
-
----
-
-## 🌈 그라데이션 색상
-
-### 2.1.1 모드 (Compact, Default, Full)
-
-사용량에 따라 4단계로 색상이 변화합니다:
-
-| 바 | 0-40% | 40-80% | 80-100% |
-|-----|-------|--------|---------|
-| **Context** | Mocha Maroon | Latte Maroon | 🔴 Latte Red |
-| **5H Limit** | Mocha Lavender | Latte Blue | 🔴 Latte Red |
-| **7D Limit** | Mocha Yellow | Latte Green | 🔴 Latte Red |
-
-> ⚠️ **80% 이상이면 빨간색 경고!** 사용량 관리에 즉각적인 피드백 제공
-
-### 1.0.3 Legacy
-
-| 바 | 0-50% | 50-100% |
-|-----|-------|---------|
-| **Context** | Latte Yellow | Latte Red → Mauve |
-| **Usage (5H/7D)** | Mocha Green | Latte Teal → Blue |
-
----
-
-## 🔧 명령어
-
-### `/awesome-statusline-start` — 설치 마법사
-
-| 명령어 | 설명 |
-|--------|------|
-| `/awesome-statusline-start` | 대화형 설치 (버전 → 모드 → 설치방식) |
-| `/awesome-statusline-start compact` | Compact 모드 즉시 설치 |
-| `/awesome-statusline-start default` | Default 모드 즉시 설치 |
-| `/awesome-statusline-start full` | Full 모드 즉시 설치 |
-| `/awesome-statusline-start legacy` | Legacy 1.0.3 즉시 설치 |
-| `/awesome-statusline-start restore` | 백업에서 복원 |
-
-### `/awesome-statusline-mode` — 모드 변경
-
-| 명령어 | 설명 |
-|--------|------|
-| `/awesome-statusline-mode` | 대화형 모드 선택 |
-| `/awesome-statusline-mode compact` | Compact로 변경 |
-| `/awesome-statusline-mode default` | Default로 변경 |
-| `/awesome-statusline-mode full` | Full로 변경 |
-| `/awesome-statusline-mode legacy` | Legacy로 변경 |
-| `/awesome-statusline-mode restore` | 백업에서 복원 |
-
-### `/awesome-statusline-remove` — 설정 해제/삭제
-
-| 명령어 | 설명 |
-|--------|------|
-| `/awesome-statusline-remove` | 대화형 선택 |
-| `/awesome-statusline-remove settings` | 설정만 해제 (스크립트 유지) |
-| `/awesome-statusline-remove all` | 완전 삭제 (설정 + 스크립트 + 백업) |
-
----
-
-## 📦 마켓플레이스 명령어
-
-Claude Code 내에서 아래 명령어들을 사용할 수 있습니다:
-
-```bash
-# 마켓플레이스 추가
-/plugin marketplace add awesomejun/awesome-claude-plugins
-
-# 플러그인 설치
-/plugin install awesome-statusline@awesome-claude-plugins
-
-# 플러그인 목록 보기
-/plugin marketplace list
-
-# 마켓플레이스 업데이트
-/plugin marketplace update awesome-claude-plugins
-
-# 마켓플레이스 제거
-/plugin marketplace remove awesome-claude-plugins
-```
-
----
-
-## ⚙️ 요구 사항
-
-| 항목 | 설명 |
+| 항목 | 의미 |
 |------|------|
-| **Claude Code CLI** | 최신 버전 |
-| **OS** | macOS / Windows / Linux |
-| **jq** | JSON 파싱 (설치 시 자동 설치됨) |
+| 🤖 **모델** | 현재 모델 (`Opus 4.8` 등) |
+| ⚡ **Effort** | 추론 강도 — `low`/`medium`/`high`/`xhigh`/`max`. `/effort`로 실시간. 모델이 effort를 지원하지 않으면 숨김. |
+| 💡 **Thinking** | 세션에 확장 사고가 켜져 있음 |
+| 🎨 **스타일** | 현재 출력 스타일 |
+| 🌿 **Git** | 브랜치, dirty/clean, ahead ↑ / behind ↓ (xlarge) |
+| 🐍 **Env** | 활성 conda / virtualenv |
+| 🧠 **컨텍스트** | 컨텍스트 창 사용량 바 + 토큰 수 |
+| 💰 **비용 / ⏰ 시간** | 세션 비용(USD)과 경과 시간 |
+| 🚀 **5시간 / 🌟 7일** | 사용량 한도 바 + 리셋 시각 (Pro/Max, 공식 rate-limit API) |
+
+모든 색은 [Catppuccin](https://catppuccin.com/) 팔레트를 따릅니다. Nerd Font 불필요 — 모든 글리프는 표준 이모지/유니코드 블록입니다.
 
 ---
 
-## 🛠️ 플러그인 개발자용
+## 🔧 크기 변경 / 제거
 
-이 마켓플레이스에 플러그인을 추가하고 싶으신가요?
+**크기 변경** — 설치 스크립트를 새 크기로 다시 실행하면 됩니다:
+```bash
+./install.sh m          # 또는: curl … | bash -s -- m
+```
 
-1. 이 저장소를 Fork
-2. `plugins/` 디렉토리에 플러그인 추가
-3. `.claude-plugin/marketplace.json`에 플러그인 정보 추가
-4. Pull Request 제출
-
----
-
-## 🌟 기여하기
-
-기여를 환영합니다! 자유롭게:
-
-- ⭐ 유용하다면 이 저장소에 Star를 눌러주세요
-- 🐛 [Issues](https://github.com/awesomejun/awesome-claude-plugins/issues)에서 버그를 신고해주세요
-- 💡 새로운 기능을 제안해주세요
-- 🔧 Pull Request를 제출해주세요
+**제거** — `~/.claude/settings.json`에서 `statusLine` 항목을 지우고(설치할 때마다 타임스탬프 백업이 만들어집니다) `~/.claude/awesome-statusline.sh`를 삭제하면 됩니다.
 
 ---
 
-## 📄 라이선스
+## ✅ 요구사항 (자동 설치됨)
 
-MIT License — 자유롭게 사용하고 기여해주세요!
+| 의존성 | 이유 | 설치 경로 |
+|-----------|------|-----------|
+| `jq` | 상태줄 JSON 파싱 | brew / apt / dnf / pacman / zypper / apk · winget / scoop / choco |
+| Git Bash *(Windows 전용)* | Windows에서 Bash 스크립트 실행 | winget / scoop / choco |
+
+Windows에서 Claude Code는 상태줄을 **Git Bash가 있으면 Git Bash로, 없으면 PowerShell로** 실행합니다 — 그래서 설치 스크립트가 Git Bash 존재를 보장하고, `.sh`가 그대로 동작합니다.
 
 ---
 
-<p align="center">
-  Made with 💜 by <a href="https://github.com/awesomejun">@awesomejun</a>
-</p>
+## 🙋 FAQ
 
-<p align="center">
-  <sub>Powered by <a href="https://github.com/catppuccin/catppuccin">Catppuccin</a> 🐱</sub>
-</p>
+**Claude Code가 느려지나요?** 아니요 — 갱신마다 도는 작은 Bash 스크립트입니다.
+
+**`⚡effort`가 안 보여요.** 현재 모델이 effort 파라미터를 노출하지 않아 의도적으로 숨긴 것입니다. `/effort`를 지원하는 모델(예: Opus 4.x)로 바꾸세요.
+
+**왜 Nerd Font 아이콘 대신 이모지인가요?** 폰트 설치 없이 어떤 터미널에서도 바로 제대로 보이게 하려고요.
+
+**기존 설정은 어디 갔나요?** 설치할 때마다 `settings.json`을 `settings.json.backup-<타임스탬프>`로 백업한 뒤 건드립니다.
+
+---
+
+## 🧩 플러그인 마켓플레이스로 설치하기
+
+Claude Code 플러그인 시스템을 선호하신다면, 마켓플레이스 플러그인으로도 배포됩니다:
+
+```
+/plugin marketplace add AwesomeJun/CC-statusline
+/plugin install awesome-statusline
+```
+
+설치 후 `/statusline-setup xl`(또는 원하는 크기)을 실행하면 적용됩니다. 위의 한 줄 `install.sh`가 메인 경로이고, 이건 대안입니다.
+
+---
+
+<div align="center">
+
+Claude Code 커뮤니티를 위해 🩵 으로 제작 · [Catppuccin](https://catppuccin.com/) 테마 · MIT License
+
+⭐ **터미널이 더 예뻐졌다면 별을 눌러주세요.**
+
+</div>

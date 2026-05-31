@@ -1,383 +1,201 @@
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/feature-overview-en.jpeg" alt="Awesome Statusline" width="100%"/>
-</p>
+<div align="center">
 
-<h1 align="center">Awesome Claude Plugins</h1>
+# ⚡ Awesome Statusline
 
-<p align="center">
-  <strong>🎨 A Beautiful Plugin Marketplace for Claude Code</strong>
-</p>
+**A beautiful statusline for [Claude Code](https://claude.com/claude-code) — context, usage limits, cost & reasoning `⚡effort`, all at a glance. One line to install on macOS, Linux & Windows.**
 
-<p align="center">
-  <a href="README.ko.md">🇰🇷 한국어</a> |
-  <strong>🇺🇸 English</strong>
-</p>
+[🇰🇷 한국어](README.ko.md) · [Quick Install](#-quick-install) · [Presets](#-five-presets) · [What it shows](#-what-it-shows) · [FAQ](#-faq)
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/hero.jpeg" alt="Awesome Statusline Hero" width="100%"/>
-</p>
+<img src="https://img.shields.io/github/stars/AwesomeJun/CC-statusline?style=flat-square&color=cba6f7" alt="Stars"/>
+<img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-89b4fa?style=flat-square" alt="Platforms"/>
+<img src="https://img.shields.io/badge/theme-Catppuccin-f5c2e7?style=flat-square" alt="Catppuccin"/>
+<img src="https://img.shields.io/badge/deps-auto--installed-a6e3a1?style=flat-square" alt="Zero config"/>
+<img src="https://img.shields.io/badge/license-MIT-fab387?style=flat-square" alt="MIT"/>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Claude%20Code-Plugin%20Marketplace-blueviolet?style=flat-square" alt="Claude Code Plugin Marketplace"/>
-  <img src="https://img.shields.io/badge/theme-Catppuccin%20Mocha-f5c2e7?style=flat-square" alt="Catppuccin Mocha"/>
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"/>
-  <img src="https://img.shields.io/github/stars/awesomejun/awesome-claude-plugins?style=flat-square" alt="GitHub Stars"/>
-</p>
+<br/><br/>
 
-<p align="center">
-  <a href="#-plugins">Plugins</a> ·
-  <a href="#-quick-start">Quick Start</a> ·
-  <a href="#-awesome-statusline">Awesome Statusline</a> ·
-  <a href="#-marketplace-commands">Marketplace Commands</a>
-</p>
+<img src="assets/presets/presets.png" alt="Five presets — xsmall to xlarge, with live ⚡effort and 💡thinking" width="820"/>
+
+<sub>▶ <a href="https://awesomejun.github.io/CC-statusline/">Interactive live demo</a></sub>
+
+</div>
 
 ---
 
-> **2026-04-02 Update:** v2.1.1 — Updated for Claude Opus 4.6 **1M context window** support. All modes now correctly handle the expanded context capacity.
+## 🆕 What's new
+
+Built to keep pace with Claude Code — recent updates:
+
+| Date | Update |
+|------|--------|
+| **2026-05-31** | **Opus 4.8** support · reasoning **effort** (`high`/`xhigh`/`max`) + **thinking** indicators · one-line cross-platform installer (auto-installs `jq` / Git Bash) · 5 size presets (`xs`–`xl`) · JetBrains Mono |
+| **2026-04-01** | **1M-token context window** support (Opus) · usage bars render before the first chat |
+| **2026-01-19** | Multi-mode display system · plugin marketplace |
+| **2026-01-18** | Catppuccin gradient bars · live **5h / 7d** usage-limit monitoring |
 
 ---
 
-## 📦 Plugins
+## Why this one?
 
-| Plugin | Version | Description |
-|--------|---------|-------------|
-| [**Awesome Statusline**](plugins/awesome-statusline) | v2.1.1 | Catppuccin-themed Statusline + Real-time API Monitoring |
+| | Awesome Statusline | Others |
+|---|:---:|:---:|
+| Shows `⚡effort` (high/xhigh/max) + `💡thinking` | ✅ **only one** | ❌ |
+| Live **5h / 7d usage** bars (official rate-limit API) | ✅ | partial |
+| Runs with **no Node, no Nerd Font** | ✅ pure Bash + emoji | ❌ needs node / fonts |
+| **Auto-installs** its deps (`jq`, Git Bash) | ✅ mac · linux · windows | manual |
+| Pick a look with **one word** (`xs`…`xl`) | ✅ 5 presets | wizard / TUI |
+
+> Built on Claude Code's official statusline JSON, so `⚡effort` reflects live `/effort` changes (Opus 4.x) and disappears on models that don't support it.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Install
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/install-demo.gif" alt="Installation Demo" width="100%"/>
-</p>
+You don't need to install `jq`, Git, or anything first — the installer does it for you.
 
-### One-Liner Install (for AI Agents)
-
-Paste this into Claude Code and let the agent handle everything:
-
-```
-Read https://raw.githubusercontent.com/awesomejun/awesome-claude-plugins/main/docs/installation/claude.md and follow every step.
-```
-
-### Manual Install
-
-#### Step 1: Launch Claude Code
+**macOS / Linux**
 ```bash
-claude
+curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xl
 ```
 
-#### Step 2: Add the Marketplace
-```
-/plugin marketplace add awesomejun/awesome-claude-plugins
-```
-> **Tip**: Enable auto-update via `/plugin` → Marketplaces → awesome-claude-plugins → Enable auto-update
-
-#### Step 3: Install the Plugin
-```
-/plugin install awesome-statusline@awesome-claude-plugins
+**Windows (PowerShell)**
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1))) xl
 ```
 
-#### Step 4: Run the Setup Wizard
-```
-/awesome-statusline-start
-```
-
-> 💡 The wizard will guide you through Version → Mode → Installation step by step!
-
-> 💖 If the statusline turns out useful, a ⭐ on the repo helps other developers find it. You can star from the GitHub page, or run `gh api user/starred/awesomejun/awesome-claude-plugins -X PUT`.
-
-
----
-
-## 🎨 Awesome Statusline
-
-<table>
-<tr>
-<td width="60">✨</td>
-<td><strong>For those who value aesthetics while coding</strong></td>
-</tr>
-<tr>
-<td>😮‍💨</td>
-<td><strong>Tired of checking <code>/context</code>, <code>/usage</code> manually</strong></td>
-</tr>
-<tr>
-<td>🖥️</td>
-<td><strong>CLI lovers who still want that GUI vibe</strong></td>
-</tr>
-</table>
-
-> **Awesome Statusline** was built for developers like you!
-
-Monitor **Context**, **5H/7D API limits** in real-time with beautiful **Catppuccin-themed** gradient progress bars. No more typing slash commands — see everything at a glance in your terminal header.
-
-### ✨ Key Features
-
-| | Feature | Description |
-|:--:|---------|-------------|
-| 🌈 | **Catppuccin Theme** | Beautiful 4-stage gradient progress bars |
-| 📊 | **Real-time Monitoring** | Model, Git status, Context usage, API limits (5H/7D) |
-| 🔄 | **Easy Mode Switching** | Instantly change with `/awesome-statusline-mode` |
-| 🎨 | **4 Display Modes** | Compact, Default, Full, Legacy |
-| 🛠️ | **Customizable** | Shell script-based, freely modifiable |
-| 💾 | **Auto Backup** | Automatic backup and restore of existing statusline |
-
----
-
-## 📐 Display Modes
-
-### Full Mode (5 lines, 40-block bar)
-
-The most detailed mode. Shows **session cost**, **elapsed time**, **Git sync status (ahead/behind)**, **virtual environment**, and **exact token count (94k/200k)**. Best suited for wide terminals where you want complete visibility of your development status.
-
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-full.png" alt="Full Mode"/>
-</p>
-
+**Or clone and run** (interactive size picker if you omit the size):
 ```bash
-# Change mode
-/awesome-statusline-mode full
+git clone https://github.com/AwesomeJun/CC-statusline.git && cd CC-statusline
+./install.sh            # macOS / Linux
+./install.ps1           # Windows PowerShell
 ```
+
+Swap `xl` for any size — abbreviation **or** full name: `xs`/`xsmall`, `s`/`small`, `m`/`medium`, `l`/`large`, `xl`/`xlarge`.
+Then restart Claude Code. That's it.
+
+---
+
+## 📐 Five Presets
+
+One word picks how much you see. Smallest → largest:
+
+| Size | Lines | At a glance |
+|------|:-----:|-------------|
+| `xsmall` (`xs`) | 2 | model · effort · thinking · path · branch · 3 tiny bars |
+| `small` (`s`) | 2 | + labels, percentages, output style |
+| `medium` (`m`) | 4 | classic layout, full-width context bar |
+| `large` (`l`) | 5 | + cost, session time, 20-block usage bars |
+| `xlarge` (`xl`) | 5 | everything: git ahead/behind, env, 40-block bars, resets |
 
 <details>
-<summary>📌 Full Mode Details</summary>
+<summary>📋 Plain-text preview (copy-paste friendly)</summary>
+<br/>
 
-| Item | Display | Meaning |
-|------|---------|---------|
-| `📝 +2 !1` | Git status | 2 staged, 1 modified |
-| `↑3` | Ahead | 3 commits to push |
-| `🐍 base` | Virtual env | Active environment |
-| `💰 2.47$` | Cost | Session cumulative cost |
-| `⏰ 35m` | Time | Session elapsed time |
-| `94k/200k` | Tokens | Current/max context |
+Colors render live in your terminal:
+
+```text
+xsmall ─ 2 lines
+🤖Opus ⚡high 💡 📂~/project 🌿(main)
+🧠████░░░░░░ 5H████░░░░░░ 7D██░░░░░░░░
+
+small ─ 2 lines
+🤖 Opus 4.8 ⚡high 💡 | 🎨 default | 📂 ~/project 🌿(main)
+🧠 Context ████░░░░░░ 43% | 5H ████░░░░░░ 42% | 7D ██░░░░░░░░ 18%
+
+medium ─ 4 lines
+🧠 Opus 4.8 ⚡high 💡 | 🚧 dirty | no conda | 🎨 default
+📂 ~/project 🌿(main)
+📝 Context █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used
+🚀 Usage 5H ████░░░░░░ 42% | 7D ██░░░░░░░░ 18%
+
+large ─ 5 lines
+🤖 Opus 4.8 ⚡high 💡 | 📝 +5 !12 | 🐍 venv | 🎨 default
+📂 ~/project 🌿(main) | 💰 1.23$ | ⏰ 1h2m
+🧠 Context  █████████░░░░░░░░░░░ 43% used (87k/200k)
+🚀 Usage 5H ████████░░░░░░░░░░░░ 42% (Reset 2h15m left)
+⭐ Usage 7D ████░░░░░░░░░░░░░░░░ 18% (Reset Thu 19:00)
+
+xlarge ─ 5 lines
+🤖 Opus 4.8 ⚡high 💡 | 🎨 default | 📝 dirty +5 !12 | 🐍 venv
+📂 ~/project 🌿(main) | 💰 1.23$ | ⏰ 1h2m
+🧠 Context  █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used (87k/200k)
+🚀 5H Limit █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 42% (Resets in 2h15m)
+🌟 7D Limit ███████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 18% (Resets Dec 31 at 7pm)
+```
 
 </details>
 
 ---
 
-### Default Mode (2 lines, 10-block bar)
+## 🎨 What it shows
 
-A balanced mode that packs **model name**, **output style**, **Git branch/status**, and **Context/5H/7D usage** into 2 lines. Reset times shown concisely as `(12m)`, `(Fri)`.
+| Element | Meaning |
+|---------|---------|
+| 🤖 **Model** | Current model (`Opus 4.8`, …) |
+| ⚡ **Effort** | Reasoning effort — `low`/`medium`/`high`/`xhigh`/`max`. Live with `/effort`. Hidden if the model has no effort param. |
+| 💡 **Thinking** | Extended thinking is on for the session |
+| 🎨 **Style** | Active output style |
+| 🌿 **Git** | Branch, dirty/clean, ahead ↑ / behind ↓ (xlarge) |
+| 🐍 **Env** | Active conda / virtualenv |
+| 🧠 **Context** | Context-window usage bar with token count |
+| 💰 **Cost / ⏰ Time** | Session cost (USD) and duration |
+| 🚀 **5h / 🌟 7d** | Usage-limit bars + reset time (Pro/Max, from the official rate-limit API) |
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-default.png" alt="Default Mode"/>
-</p>
+All colors follow the [Catppuccin](https://catppuccin.com/) palette. No Nerd Font required — every glyph is a standard emoji/Unicode block.
 
+---
+
+## 🔧 Change size or remove
+
+**Change size** — just re-run the installer with a new size:
 ```bash
-# Change mode
-/awesome-statusline-mode default
+./install.sh m          # or: curl … | bash -s -- m
 ```
 
-<details>
-<summary>📌 Default Mode Details</summary>
-
-| Item | Display | Meaning |
-|------|---------|---------|
-| `✅` | Git status | clean (no changes) |
-| `38%` | Context | Context usage |
-| `89%` | 5H | ⚠️ 5-hour limit approaching! |
-| `(12m)` | Reset | 5H resets in 12 min |
-| `(Fri)` | 7D Reset | Resets on Friday |
-
-</details>
+**Uninstall** — remove the `statusLine` entry from `~/.claude/settings.json` (a timestamped backup is created on every install) and delete `~/.claude/awesome-statusline.sh`.
 
 ---
 
-### Compact Mode (2 lines, 10-block bar)
+## ✅ Requirements (auto-installed)
 
-Minimal mode showing only essential info. Model names abbreviated to **Opus**, progress bars shown **without percentages**. Perfect for narrow terminals or split-screen setups while maintaining visual usage tracking.
+| Dependency | Why | Installed via |
+|-----------|-----|---------------|
+| `jq` | parse the statusline JSON | brew / apt / dnf / pacman / zypper / apk · winget / scoop / choco |
+| Git Bash *(Windows only)* | run the Bash script on Windows | winget / scoop / choco |
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-compact.png" alt="Compact Mode"/>
-</p>
+On Windows, Claude Code runs the statusline through **Git Bash when present, otherwise PowerShell** — so the installer makes sure Git Bash exists and your `.sh` just works.
 
-```bash
-# Change mode
-/awesome-statusline-mode compact
+---
+
+## 🙋 FAQ
+
+**Does it slow Claude Code down?** No — it's a small Bash script that runs per refresh.
+
+**I don't see `⚡effort`.** Your current model doesn't expose the effort parameter, so the field is intentionally hidden. Switch to a model that supports `/effort` (e.g. Opus 4.x).
+
+**Why emoji instead of Nerd Font icons?** So it looks right out of the box on any terminal, with zero font setup.
+
+**Where are my old settings?** Every install backs up `settings.json` to `settings.json.backup-<timestamp>` before touching it.
+
+---
+
+## 🧩 Or install via the plugin marketplace
+
+Prefer Claude Code's plugin system? It's also published as a marketplace plugin:
+
+```
+/plugin marketplace add AwesomeJun/CC-statusline
+/plugin install awesome-statusline
 ```
 
-<details>
-<summary>📌 Compact Mode Details</summary>
-
-| Item | Display | Meaning |
-|------|---------|---------|
-| `Opus` | Model | Abbreviated |
-| `📝` | Git | dirty (has changes) |
-| Bar only | Usage | Visual only, no % numbers |
-
-</details>
+Then run `/statusline-setup xl` (or any size) to apply it. The one-line `install.sh` above is the primary path; this is just an alternative.
 
 ---
 
-### Legacy Mode (4 lines, classic design)
+<div align="center">
 
-Classic mode maintaining the original v1.0.3 design. Features 40-block Context bar + 10-block Usage bar combination, **virtual environment** display, and simple 2-stage gradient colors.
+Built with 🩵 for the Claude Code community · [Catppuccin](https://catppuccin.com/) theme · MIT License
 
-<p align="center">
-  <img src="plugins/awesome-statusline/assets/demo-legacy.png" alt="Legacy Mode"/>
-</p>
+⭐ **Star it if it made your terminal nicer.**
 
-```bash
-# Change mode
-/awesome-statusline-mode legacy
-```
-
-<details>
-<summary>📌 Legacy Mode Details</summary>
-
-| Item | Display | Meaning |
-|------|---------|---------|
-| `Sonnet 4` | Model | Different model example |
-| `🎨 explanatory` | Style | Output Style |
-| `73%` | Context | Context usage |
-| `(2h31m)` | 5H Reset | Resets in 2h 31m |
-| `(Mon)` | 7D Reset | Resets on Monday |
-
-</details>
-
----
-
-## 📊 Mode Comparison
-
-| Feature | Compact | Default | Full | Legacy |
-|---------|:-------:|:-------:|:----:|:------:|
-| **Lines** | 2 | 2 | 5 | 4 |
-| **Bar Width** | 10 blocks | 10 blocks | 40 blocks | 40 blocks |
-| **Model Name** | Short (Opus) | Full (Opus 4.5) | Full (Opus 4.5) | Full (Opus 4.5) |
-| **Output Style** | ❌ | ✅ | ✅ | ✅ |
-| **Git Status** | ✅ | ✅ | ✅ | ✅ |
-| **Git Details** (+N !N ?N) | ❌ | ❌ | ✅ | ❌ |
-| **Git ↑↓** (ahead/behind) | ❌ | ❌ | ✅ | ❌ |
-| **Virtual Env** | ❌ | ❌ | ✅ | ✅ |
-| **Session Cost** (💰) | ❌ | ❌ | ✅ | ❌ |
-| **Session Time** (⏰) | ❌ | ❌ | ✅ | ❌ |
-| **Reset Time** | ❌ | Short (1h2m) | Full | Short |
-| **Gradient Bar** | ✅ | ✅ | ✅ | ✅ |
-| **% Bold Color** | ❌ | ✅ | ✅ | ✅ |
-
----
-
-## 🌈 Gradient Colors
-
-### 2.1.1 Modes (Compact, Default, Full)
-
-Colors change in 4 stages based on usage:
-
-| Bar | 0-40% | 40-80% | 80-100% |
-|-----|-------|--------|---------|
-| **Context** | Mocha Maroon | Latte Maroon | 🔴 Latte Red |
-| **5H Limit** | Mocha Lavender | Latte Blue | 🔴 Latte Red |
-| **7D Limit** | Mocha Yellow | Latte Green | 🔴 Latte Red |
-
-> ⚠️ **Red warning at 80%+!** Immediate feedback for usage management
-
-### 1.0.3 Legacy
-
-| Bar | 0-50% | 50-100% |
-|-----|-------|---------|
-| **Context** | Latte Yellow | Latte Red → Mauve |
-| **Usage (5H/7D)** | Mocha Green | Latte Teal → Blue |
-
----
-
-## 🔧 Commands
-
-### `/awesome-statusline-start` — Setup Wizard
-
-| Command | Description |
-|---------|-------------|
-| `/awesome-statusline-start` | Interactive setup (Version → Mode → Install) |
-| `/awesome-statusline-start compact` | Install Compact mode directly |
-| `/awesome-statusline-start default` | Install Default mode directly |
-| `/awesome-statusline-start full` | Install Full mode directly |
-| `/awesome-statusline-start legacy` | Install Legacy 1.0.3 directly |
-| `/awesome-statusline-start restore` | Restore from backup |
-
-### `/awesome-statusline-mode` — Change Mode
-
-| Command | Description |
-|---------|-------------|
-| `/awesome-statusline-mode` | Interactive mode selection |
-| `/awesome-statusline-mode compact` | Switch to Compact |
-| `/awesome-statusline-mode default` | Switch to Default |
-| `/awesome-statusline-mode full` | Switch to Full |
-| `/awesome-statusline-mode legacy` | Switch to Legacy |
-| `/awesome-statusline-mode restore` | Restore from backup |
-
-### `/awesome-statusline-remove` — Uninstall
-
-| Command | Description |
-|---------|-------------|
-| `/awesome-statusline-remove` | Interactive selection |
-| `/awesome-statusline-remove settings` | Remove settings only (keep scripts) |
-| `/awesome-statusline-remove all` | Complete removal (settings + scripts + backup) |
-
----
-
-## 📦 Marketplace Commands
-
-Use these commands within Claude Code:
-
-```bash
-# Add marketplace
-/plugin marketplace add awesomejun/awesome-claude-plugins
-
-# Install plugin
-/plugin install awesome-statusline@awesome-claude-plugins
-
-# List plugins
-/plugin marketplace list
-
-# Update marketplace
-/plugin marketplace update awesome-claude-plugins
-
-# Remove marketplace
-/plugin marketplace remove awesome-claude-plugins
-```
-
----
-
-## ⚙️ Requirements
-
-| Item | Description |
-|------|-------------|
-| **Claude Code CLI** | Latest version |
-| **OS** | macOS / Windows / Linux |
-| **jq** | JSON parsing (auto-installed during setup) |
-
----
-
-## 🛠️ For Plugin Developers
-
-Want to add your plugin to this marketplace?
-
-1. Fork this repository
-2. Add your plugin to the `plugins/` directory
-3. Add plugin info to `.claude-plugin/marketplace.json`
-4. Submit a Pull Request
-
----
-
-## 🌟 Contributing
-
-Contributions are welcome! Feel free to:
-
-- ⭐ Star this repository if you find it useful
-- 🐛 Report bugs via [Issues](https://github.com/awesomejun/awesome-claude-plugins/issues)
-- 💡 Suggest new features
-- 🔧 Submit Pull Requests
-
----
-
-## 📄 License
-
-MIT License — Free to use and contribute!
-
----
-
-<p align="center">
-  Made with 💜 by <a href="https://github.com/awesomejun">@awesomejun</a>
-</p>
-
-<p align="center">
-  <sub>Powered by <a href="https://github.com/catppuccin/catppuccin">Catppuccin</a> 🐱</sub>
-</p>
+</div>
