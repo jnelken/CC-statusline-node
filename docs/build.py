@@ -177,7 +177,7 @@ HTML = f'''<!DOCTYPE html>
 
   <div class="section-title">Why this one</div>
   <div class="why">
-    <div class="item"><h3>⚡ <span>Effort &amp; thinking</span></h3><p>The only statusline that surfaces <b style="color:var(--peach)">/effort</b> (high · xhigh · max) and <b style="color:var(--yellow)">extended thinking</b> — live, from Claude Code's official JSON.</p></div>
+    <div class="item"><h3>⚡ <span>Effort &amp; thinking</span></h3><p>Surfaces <b style="color:var(--peach)">/effort</b> (high · xhigh · max) and <b style="color:var(--yellow)">extended thinking</b> — live, from Claude Code's official JSON.</p></div>
     <div class="item"><h3>🖥️ <span>Truly cross-platform</span></h3><p>macOS, Linux, and Windows. On Windows the installer sets up Git Bash for you, so the same script just runs.</p></div>
     <div class="item"><h3>📦 <span>Zero setup</span></h3><p>No Node. No Nerd Font. The installer auto-installs <code>jq</code> via your system's package manager. Every glyph is a plain emoji.</p></div>
     <div class="item"><h3>📐 <span>Five presets</span></h3><p>Pick how much you see with one word — <code>xs</code> to <code>xl</code>. No wizard, no config files. Re-run to switch.</p></div>

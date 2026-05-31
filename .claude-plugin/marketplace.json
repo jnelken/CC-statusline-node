@@ -10,7 +10,7 @@
     {
       "name": "awesome-statusline",
       "version": "3.0.0",
-      "description": "The only Claude Code statusline that shows reasoning effort and thinking. 5 presets (xsmall-xlarge), Catppuccin, zero-dependency, auto-installs on macOS/Linux/Windows.",
+      "description": "A Claude Code statusline that shows reasoning effort and thinking. 5 presets (xsmall-xlarge), Catppuccin, zero-dependency, auto-installs on macOS/Linux/Windows.",
       "author": {
         "name": "AwesomeJun",
         "email": "sjkang89@gmail.com"

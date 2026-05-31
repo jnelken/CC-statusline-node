@@ -35,17 +35,15 @@ Built to keep pace with Claude Code — recent updates:
 
 ---
 
-## Why this one?
+## Highlights
 
-| | Awesome Statusline | Others |
-|---|:---:|:---:|
-| Shows `⚡effort` (high/xhigh/max) + `💡thinking` | ✅ **only one** | ❌ |
-| Live **5h / 7d usage** bars (official rate-limit API) | ✅ | partial |
-| Runs with **no Node, no Nerd Font** | ✅ pure Bash + emoji | ❌ needs node / fonts |
-| **Auto-installs** its deps (`jq`, Git Bash) | ✅ mac · linux · windows | manual |
-| Pick a look with **one word** (`xs`…`xl`) | ✅ 5 presets | wizard / TUI |
+- ⚡ **Reasoning effort & thinking** — shows `/effort` (`high`/`xhigh`/`max`) and extended thinking, live from Claude Code's official statusline JSON (and hidden on models that don't support effort).
+- 📊 **5h / 7d usage** — limit bars from the official rate-limit API, so you can see how much budget is left.
+- 🖥️ **No Node, no Nerd Font** — pure Bash + standard emoji, looks right out of the box.
+- 📦 **Auto-installs** its dependencies (`jq`, plus Git Bash on Windows) on macOS, Linux & Windows.
+- 📐 **Five size presets** (`xs`–`xl`) — pick how much you see with one word.
 
-> Built on Claude Code's official statusline JSON, so `⚡effort` reflects live `/effort` changes (Opus 4.x) and disappears on models that don't support it.
+> There are several great Claude Code statuslines out there — this one leans into reasoning-effort/thinking visibility and zero-setup, cross-platform install.
 
 ---
 
