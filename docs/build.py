@@ -36,6 +36,12 @@ PRESETS = [
 ]
 
 ANSI = re.compile(r'(\x1b\[[0-9;]*m)')
+CUSTOM_BLOCKS = {
+    "█": "full",
+    "░": "shade-light",
+    "▒": "shade-medium",
+    "▓": "shade-dark",
+}
 
 
 def render(size: str) -> str:
@@ -53,14 +59,59 @@ def ansi_to_html(s: str) -> str:
     color = None
     bold = False
     out = []
+    pending_block = None
 
-    def open_span():
+    def style_attr(extra=None, use_color=None, use_bold=None):
+        use_color = color if use_color is None else use_color
+        use_bold = bold if use_bold is None else use_bold
         st = []
-        if color:
-            st.append(f"color:rgb({color[0]},{color[1]},{color[2]})")
-        if bold:
+        if use_color:
+            st.append(f"color:rgb({use_color[0]},{use_color[1]},{use_color[2]})")
+        if use_bold:
             st.append("font-weight:700")
-        return f'<span style="{";".join(st)}">' if st else "<span>"
+        if extra:
+            st.extend(extra)
+        return f' style="{";".join(st)}"' if st else ""
+
+    def flush_block():
+        nonlocal pending_block
+        if not pending_block:
+            return
+        cls, block_color, block_bold, count = pending_block
+        width = f"width:{count}ch" if count > 1 else None
+        extra = [width] if width else None
+        out.append(
+            f'<span class="cg cg-{cls}"'
+            f'{style_attr(extra, block_color, block_bold)}></span>'
+        )
+        pending_block = None
+
+    def text_span(txt):
+        flush_block()
+        return f"<span{style_attr()}>{H.escape(txt)}</span>"
+
+    def queue_block(ch):
+        nonlocal pending_block
+        cls = CUSTOM_BLOCKS[ch]
+        key = (cls, color, bold)
+        if pending_block and pending_block[:3] == key:
+            pending_block = (*key, pending_block[3] + 1)
+        else:
+            flush_block()
+            pending_block = (*key, 1)
+
+    def emit_text(txt):
+        buf = []
+        for ch in txt:
+            if ch in CUSTOM_BLOCKS:
+                if buf:
+                    out.append(text_span("".join(buf)))
+                    buf.clear()
+                queue_block(ch)
+            else:
+                buf.append(ch)
+        if buf:
+            out.append(text_span("".join(buf)))
 
     for tok in ANSI.split(s):
         if tok.startswith("\x1b["):
@@ -80,7 +131,8 @@ def ansi_to_html(s: str) -> str:
         elif tok:
             txt = tok.replace("\x1b[K", "").replace("\r", "")
             if txt:
-                out.append(open_span() + H.escape(txt) + "</span>")
+                emit_text(txt)
+    flush_block()
     return "".join(out)
 
 
@@ -143,9 +195,28 @@ HTML = f'''<!DOCTYPE html>
   .term-bar{{display:flex;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04)}}
   .dot{{width:11px;height:11px;border-radius:50%}}
   .dot.r{{background:#f38ba8}}.dot.y{{background:#f9e2af}}.dot.g{{background:#a6e3a1}}
-  .term-body{{font-family:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace,"Apple Color Emoji","Noto Color Emoji";
-    font-size:13.5px;line-height:1.95;padding:16px 18px;white-space:pre;overflow-x:auto}}
+  .term-body{{font-family:"JetBrains Mono",Menlo,Consolas,monospace,"Apple Color Emoji","Noto Color Emoji";
+    font-size:13.5px;line-height:1.42;padding:12px 18px;white-space:pre;overflow-x:auto}}
   .term-body .row{{display:block}}
+  .cg{{display:inline-block;width:1ch;height:1.02em;vertical-align:-.12em;
+    background-color:currentColor;background-repeat:repeat;background-position:0 0;
+    image-rendering:pixelated}}
+  .cg-full{{background-color:currentColor}}
+  .cg-shade-light{{background-color:currentColor;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size:2px 2px;mask-size:2px 2px;
+    -webkit-mask-repeat:repeat;mask-repeat:repeat}}
+  .cg-shade-medium{{background-color:currentColor;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3Crect x='1' y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3Crect x='1' y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size:2px 2px;mask-size:2px 2px;
+    -webkit-mask-repeat:repeat;mask-repeat:repeat}}
+  .cg-shade-dark{{background-color:currentColor;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='2' height='1' fill='black'/%3E%3Crect y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='2' height='1' fill='black'/%3E%3Crect y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size:2px 2px;mask-size:2px 2px;
+    -webkit-mask-repeat:repeat;mask-repeat:repeat}}
   .why{{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}}
   @media(max-width:680px){{.why{{grid-template-columns:1fr}}.hero h1{{font-size:40px}}}}
   .why .item{{background:var(--mantle);border:1px solid var(--s0);border-radius:14px;padding:18px 20px}}

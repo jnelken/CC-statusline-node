@@ -267,7 +267,9 @@ format_time_remaining() {
 # Cross-platform date formatting (BSD/macOS vs GNU/Linux)
 _date_fmt() {
     local epoch="$1" fmt="$2"
-    if date -j -f "%s" "$epoch" "+$fmt" 2>/dev/null; then return; fi
+    local out=""
+    out=$(date -j -f "%s" "$epoch" "+$fmt" 2>/dev/null) && [[ -n "$out" ]] && { echo "$out"; return; }
+    out=$(date -r "$epoch" "+$fmt" 2>/dev/null) && [[ -n "$out" ]] && { echo "$out"; return; }
     date -d "@$epoch" "+$fmt" 2>/dev/null
 }
 

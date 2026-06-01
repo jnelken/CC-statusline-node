@@ -309,7 +309,9 @@ format_time_remaining() {
 # Cross-platform date formatting (BSD/macOS vs GNU/Linux)
 _date_fmt() {
     local epoch="$1" fmt="$2"
-    if date -j -f "%s" "$epoch" "+$fmt" 2>/dev/null; then return; fi
+    local out=""
+    out=$(date -j -f "%s" "$epoch" "+$fmt" 2>/dev/null) && [[ -n "$out" ]] && { echo "$out"; return; }
+    out=$(date -r "$epoch" "+$fmt" 2>/dev/null) && [[ -n "$out" ]] && { echo "$out"; return; }
     date -d "@$epoch" "+$fmt" 2>/dev/null
 }
 
@@ -318,11 +320,14 @@ format_reset_datetime() {
     local reset_epoch="$1"
     [[ -z "$reset_epoch" || "$reset_epoch" == "null" ]] && return
     local hour=$(_date_fmt "$reset_epoch" "%H")
-    local hour_12=$((hour % 12))
+    [[ -z "$hour" ]] && return
+    local hour_num=$((10#$hour))
+    local hour_12=$((hour_num % 12))
     [[ $hour_12 -eq 0 ]] && hour_12=12
     local ampm="am"
-    [[ $hour -ge 12 ]] && ampm="pm"
+    [[ $hour_num -ge 12 ]] && ampm="pm"
     local month_day=$(_date_fmt "$reset_epoch" "%b %d")
+    [[ -z "$month_day" ]] && return
     echo "${month_day} at ${hour_12}${ampm}"
 }
 

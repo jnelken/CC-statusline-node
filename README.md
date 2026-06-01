@@ -85,7 +85,7 @@ One word picks how much you see. Smallest → largest:
 | `large` (`l`) | 5 | + cost, session time, 20-block usage bars |
 | `xlarge` (`xl`) | 5 | everything: git ahead/behind, env, 40-block bars, resets |
 
-> 🔤 Curious how it looks in *your* font? See the **[15-font showcase →](demo.md)** — including your OS's default (SF Mono, Menlo, Cascadia, Consolas…), JetBrains Mono, Fira Code, D2Coding, and more.
+> 🔤 Curious how it looks in *your* font? See the **[12-font showcase →](demo.md)** — 10 cross-platform mono fonts plus Menlo and MesloLGS.
 
 <details>
 <summary>📋 Plain-text preview (copy-paste friendly)</summary>

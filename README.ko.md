@@ -85,7 +85,7 @@ git clone https://github.com/AwesomeJun/CC-statusline.git && cd CC-statusline
 | `large` (`l`) | 5 | + 비용, 세션 시간, 20블록 사용량 바 |
 | `xlarge` (`xl`) | 5 | 전부: git ahead/behind, env, 40블록 바, 리셋 시각 |
 
-> 🔤 *내* 폰트에선 어떻게 보일까요? **[15개 폰트 쇼케이스 →](demo.md)** — OS 기본 폰트(SF Mono, Menlo, Cascadia, Consolas…)와 JetBrains Mono, Fira Code, D2Coding 등 포함.
+> 🔤 *내* 폰트에선 어떻게 보일까요? **[12개 폰트 쇼케이스 →](demo.md)** — 크로스플랫폼 모노 폰트 10개와 Menlo, MesloLGS 포함.
 
 <details>
 <summary>📋 텍스트 미리보기 (복사용)</summary>

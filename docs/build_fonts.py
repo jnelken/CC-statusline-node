@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Render the `large` preset across popular & OS-default monospace fonts.
+"""Render the `large` preset across popular monospace fonts.
 
 Generates docs/fonts.html (captured to assets/fonts-demo.png) so users can see
-how the statusline looks in cross-platform webfonts AND the system fonts their
-terminal likely ships with by default.
+how the statusline looks in a curated set of cross-platform webfonts plus two
+common terminal defaults.
 """
 import subprocess, re, html as H, os, pathlib, time
 
@@ -26,6 +26,12 @@ MOCK = (
 ) % (str(ROOT), _now + 16560, _now + 230400)
 
 ANSI = re.compile(r'(\x1b\[[0-9;]*m)')
+CUSTOM_BLOCKS = {
+    "█": "full",
+    "░": "shade-light",
+    "▒": "shade-medium",
+    "▓": "shade-dark",
+}
 
 
 def render(size: str) -> str:
@@ -42,14 +48,59 @@ def ansi_to_html(s: str) -> str:
     color = None
     bold = False
     out = []
+    pending_block = None
 
-    def op():
+    def style_attr(extra=None, use_color=None, use_bold=None):
+        use_color = color if use_color is None else use_color
+        use_bold = bold if use_bold is None else use_bold
         st = []
-        if color:
-            st.append(f"color:rgb({color[0]},{color[1]},{color[2]})")
-        if bold:
+        if use_color:
+            st.append(f"color:rgb({use_color[0]},{use_color[1]},{use_color[2]})")
+        if use_bold:
             st.append("font-weight:700")
-        return f'<span style="{";".join(st)}">' if st else "<span>"
+        if extra:
+            st.extend(extra)
+        return f' style="{";".join(st)}"' if st else ""
+
+    def flush_block():
+        nonlocal pending_block
+        if not pending_block:
+            return
+        cls, block_color, block_bold, count = pending_block
+        width = f"width:{count}ch" if count > 1 else None
+        extra = [width] if width else None
+        out.append(
+            f'<span class="cg cg-{cls}"'
+            f'{style_attr(extra, block_color, block_bold)}></span>'
+        )
+        pending_block = None
+
+    def text_span(txt):
+        flush_block()
+        return f"<span{style_attr()}>{H.escape(txt)}</span>"
+
+    def queue_block(ch):
+        nonlocal pending_block
+        cls = CUSTOM_BLOCKS[ch]
+        key = (cls, color, bold)
+        if pending_block and pending_block[:3] == key:
+            pending_block = (*key, pending_block[3] + 1)
+        else:
+            flush_block()
+            pending_block = (*key, 1)
+
+    def emit_text(txt):
+        buf = []
+        for ch in txt:
+            if ch in CUSTOM_BLOCKS:
+                if buf:
+                    out.append(text_span("".join(buf)))
+                    buf.clear()
+                queue_block(ch)
+            else:
+                buf.append(ch)
+        if buf:
+            out.append(text_span("".join(buf)))
 
     for tok in ANSI.split(s):
         if tok.startswith("\x1b["):
@@ -69,14 +120,13 @@ def ansi_to_html(s: str) -> str:
         elif tok:
             txt = tok.replace("\x1b[K", "").replace("\r", "")
             if txt:
-                out.append(op() + H.escape(txt) + "</span>")
+                emit_text(txt)
+    flush_block()
     return "".join(out)
 
 
 LARGE = "".join(f'<div class="row">{ansi_to_html(ln)}</div>'
                 for ln in render("large").rstrip("\n").split("\n"))
-
-D2 = os.path.expanduser("~/Library/Fonts/D2CodingLigatureNerdFontMono")
 
 # (display name, css font-family, note, google_query | None, local_face | None)
 FONTS = [
@@ -90,13 +140,10 @@ FONTS = [
     ("Ubuntu Mono",     "'Ubuntu Mono'",     "Google Fonts · Ubuntu default", "Ubuntu+Mono", None),
     ("Inconsolata",     "'Inconsolata'",     "Google Fonts · classic", "Inconsolata", None),
     ("Space Mono",      "'Space Mono'",      "Google Fonts · geometric", "Space+Mono", None),
-    # — system / OS-default fonts (no install needed on that OS) —
-    ("SF Mono",         "'.SF NS Mono','SF Mono'", "macOS Terminal default", None, None),
+    ("Geist Mono",      "'Geist Mono'",      "Google Fonts · modern UI mono", "Geist+Mono", None),
+    # — terminal defaults / popular local terminal fonts —
     ("Menlo",           "Menlo",             "macOS · VS Code default", None, None),
-    ("Monaco",          "Monaco",            "classic macOS", None, None),
     ("MesloLGS Nerd Font", "'MesloLGS Nerd Font'", "Powerlevel10k / oh-my-zsh", None, None),
-    ("Courier New",     "'Courier New'",     "universal classic", None, None),
-    ("D2Coding",        "'D2Coding'",        "Korean · Naver (local)", None, D2),
 ]
 
 links = "\n".join(
@@ -104,10 +151,11 @@ links = "\n".join(
     for *_, q, _f in FONTS if q
 )
 font_faces = "".join(
-    f"@font-face{{font-family:'D2Coding';font-weight:400;src:url('file://{face}-Regular.ttf')}}"
-    f"@font-face{{font-family:'D2Coding';font-weight:700;src:url('file://{face}-Bold.ttf')}}"
-    for *_, _q, face in FONTS if face
+    f"@font-face{{font-family:'{name}';font-weight:400;src:url('file://{face}-Regular.ttf')}}"
+    f"@font-face{{font-family:'{name}';font-weight:700;src:url('file://{face}-Bold.ttf')}}"
+    for name, *_rest, face in FONTS if face
 )
+font_faces_block = f"  {font_faces}\n" if font_faces else ""
 
 def make_cards(items, start):
     return "\n".join(
@@ -127,7 +175,7 @@ HTML = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8" />
 {links}
 <style>
-  {font_faces}
+{font_faces_block}\
   *{{box-sizing:border-box;margin:0;padding:0}}
   body{{background:radial-gradient(900px 500px at 50% -10%,#25253a,#181825 60%,#11111b);
     color:#cdd6f4;font-family:-apple-system,"Segoe UI",sans-serif;padding:48px 24px}}
@@ -143,16 +191,35 @@ HTML = f'''<!DOCTYPE html>
   .fname{{padding:11px 16px;font-weight:700;font-size:13.5px;color:#cba6f7;
     border-bottom:1px solid #313244}}
   .fname .src{{color:#6c7086;font-weight:500;font-size:12px;margin-left:6px}}
-  .term{{background:#1e1e2e;padding:14px 16px;font-size:13.5px;line-height:1.95;
+  .term{{background:#1e1e2e;padding:10px 16px;font-size:13.5px;line-height:1.42;
     white-space:pre;overflow-x:auto}}
   .term .row{{display:block}}
+  .cg{{display:inline-block;width:1ch;height:1.02em;vertical-align:-.12em;
+    background-color:currentColor;background-repeat:repeat;background-position:0 0;
+    image-rendering:pixelated}}
+  .cg-full{{background-color:currentColor}}
+  .cg-shade-light{{background-color:currentColor;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size:2px 2px;mask-size:2px 2px;
+    -webkit-mask-repeat:repeat;mask-repeat:repeat}}
+  .cg-shade-medium{{background-color:currentColor;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3Crect x='1' y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='1' height='1' fill='black'/%3E%3Crect x='1' y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size:2px 2px;mask-size:2px 2px;
+    -webkit-mask-repeat:repeat;mask-repeat:repeat}}
+  .cg-shade-dark{{background-color:currentColor;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='2' height='1' fill='black'/%3E%3Crect y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2' viewBox='0 0 2 2'%3E%3Crect width='2' height='1' fill='black'/%3E%3Crect y='1' width='1' height='1' fill='black'/%3E%3C/svg%3E");
+    -webkit-mask-size:2px 2px;mask-size:2px 2px;
+    -webkit-mask-repeat:repeat;mask-repeat:repeat}}
 </style></head><body>
 <div class="wrap">
   <h1><span class="s">⚡</span> Awesome Statusline — one preset, many fonts</h1>
   <p class="sub">The <code>large</code> preset, same data, only the font changes. It's font-agnostic — it just uses your terminal's font.</p>
   <div class="group">Cross-platform webfonts (Google Fonts)</div>
 {cards_google}
-  <div class="group">System / OS-default fonts</div>
+  <div class="group">Terminal defaults</div>
 {cards_system}
 </div></body></html>
 '''
