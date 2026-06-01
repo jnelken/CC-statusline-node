@@ -53,22 +53,27 @@ You don't need to install `jq`, Git, or anything first — the installer does it
 
 **macOS / Linux**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xl
+curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash
 ```
 
 **Windows (PowerShell)**
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1))) xl
+irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex
 ```
 
-**Or clone and run** (interactive size picker if you omit the size):
+To choose a specific size, append it explicitly:
+```bash
+curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xl
+```
+
+**Or clone and run**:
 ```bash
 git clone https://github.com/AwesomeJun/CC-statusline.git && cd CC-statusline
 ./install.sh            # macOS / Linux
 ./install.ps1           # Windows PowerShell
 ```
 
-Swap `xl` for any size — abbreviation **or** full name: `xs`/`xsmall`, `s`/`small`, `m`/`medium`, `l`/`large`, `xl`/`xlarge`.
+Use any size explicitly — abbreviation **or** full name: `xs`/`xsmall`, `s`/`small`, `m`/`medium`, `l`/`large`, `xl`/`xlarge`.
 Then restart Claude Code. That's it.
 
 ---
@@ -188,7 +193,7 @@ Prefer Claude Code's plugin system? It's also published as a marketplace plugin:
 /plugin install awesome-statusline
 ```
 
-Then run `/statusline-setup xl` (or any size) to apply it. The one-line `install.sh` above is the primary path; this is just an alternative.
+Then run `/statusline-setup` to apply it, or pass any size like `/statusline-setup xl`. The one-line `install.sh` above is the primary path; this is just an alternative.
 
 ---
 

@@ -7,7 +7,7 @@ Install (or switch) the Awesome Statusline for the user.
 
 Run the bundled installer with the requested size. If the user gave a size in
 `$ARGUMENTS` (abbreviation `xs`/`s`/`m`/`l`/`xl` or full name), pass it through;
-otherwise default to `xlarge`:
+otherwise run the installer without arguments:
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/install.sh" $ARGUMENTS

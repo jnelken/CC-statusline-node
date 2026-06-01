@@ -11,9 +11,9 @@
   4. Patches settings.json -> statusLine (existing settings preserved + backup).
 
 .EXAMPLE
-  ./install.ps1            # interactive picker
-  ./install.ps1 xl         # by abbreviation
-  ./install.ps1 xlarge     # by full name
+  ./install.ps1            # install
+  ./install.ps1 l          # by abbreviation
+  ./install.ps1 large      # by full name
 #>
 param([string]$Size)
 
@@ -67,28 +67,13 @@ function Test-GitBash {
 }
 
 # --- pick size --------------------------------------------------------------
-$Mode = $null
+$Mode = 'large'
 if ($Size) {
   $Mode = Normalize-Mode $Size
   if (-not $Mode) {
     Write-Err "Unknown size: '$Size'"
     Write-Err "Valid: xsmall|xs  small|s  medium|m  large|l  xlarge|xl"
     exit 1
-  }
-} else {
-  Write-Host "Select a statusline size:"
-  Write-Host "  1) xsmall (xs)  2 lines  - minimal"
-  Write-Host "  2) small  (s)   2 lines  - labels + %"
-  Write-Host "  3) medium (m)   4 lines  - classic"
-  Write-Host "  4) large  (l)   5 lines  - 20-block bars"
-  Write-Host "  5) xlarge (xl)  5 lines  - full detail"
-  $choice = Read-Host "Choice [1-5] (default 5)"
-  switch ($choice) {
-    '1' { $Mode = 'xsmall' }
-    '2' { $Mode = 'small' }
-    '3' { $Mode = 'medium' }
-    '4' { $Mode = 'large' }
-    default { $Mode = 'xlarge' }
   }
 }
 

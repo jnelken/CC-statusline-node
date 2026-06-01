@@ -3,9 +3,9 @@
 # Awesome CC Statusline — installer (macOS / Linux / Windows-GitBash)
 # ----------------------------------------------------------------------------
 # Usage:
-#   ./install.sh                 # interactive size picker
-#   ./install.sh xl              # install by abbreviation
-#   ./install.sh xlarge          # install by full name
+#   ./install.sh                 # install
+#   ./install.sh l               # install by abbreviation
+#   ./install.sh large           # install by full name
 #
 # Sizes (smallest -> largest):
 #   xsmall (xs)   2 lines, 10-block bars, minimal
@@ -78,29 +78,13 @@ ensure_jq() {
 }
 
 # --- pick size --------------------------------------------------------------
-MODE=""
+MODE="large"
 if [ "$#" -ge 1 ]; then
   if ! MODE="$(normalize_mode "$1")"; then
     err "Unknown size: '$1'"
     err "Valid: xsmall|xs  small|s  medium|m  large|l  xlarge|xl"
     exit 1
   fi
-else
-  echo "Select a statusline size:"
-  echo "  1) xsmall (xs)  2 lines  · minimal"
-  echo "  2) small  (s)   2 lines  · labels + %"
-  echo "  3) medium (m)   4 lines  · classic"
-  echo "  4) large  (l)   5 lines  · 20-block bars"
-  echo "  5) xlarge (xl)  5 lines  · full detail"
-  read -rp "Choice [1-5] (default 5): " choice
-  case "${choice:-5}" in
-    1) MODE="xsmall" ;;
-    2) MODE="small"  ;;
-    3) MODE="medium" ;;
-    4) MODE="large"  ;;
-    5|"") MODE="xlarge" ;;
-    *) err "Invalid choice: $choice"; exit 1 ;;
-  esac
 fi
 
 # --- run --------------------------------------------------------------------
