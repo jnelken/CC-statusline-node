@@ -1,7 +1,7 @@
 {
   "name": "awesome-statusline",
-  "version": "3.0.0",
-  "description": "A Claude Code statusline that shows reasoning effort (⚡) and thinking (💡). 5 presets (xsmall-xlarge), Catppuccin theme, no Node/Nerd Font, auto-installs jq.",
+  "version": "3.1.0",
+  "description": "A Claude Code statusline that shows reasoning effort (⚡) and thinking (💡). 5 presets (xsmall-xlarge), Catppuccin theme, no Node/Nerd Font, native PowerShell on Windows.",
   "author": {
     "name": "AwesomeJun",
     "email": "sjkang89@gmail.com",

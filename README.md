@@ -28,7 +28,8 @@ Built to keep pace with Claude Code — recent updates:
 
 | Date | Update |
 |------|--------|
-| **2026-05-31** | **Opus 4.8** support · reasoning **effort** (`high`/`xhigh`/`max`) + **thinking** indicators · one-line cross-platform installer (auto-installs `jq` / Git Bash) · 5 size presets (`xs`–`xl`) · JetBrains Mono |
+| **2026-06-02** | **Windows native renderer** — PowerShell statusline path, no Git Bash or `jq` required on Windows |
+| **2026-05-31** | **Opus 4.8** support · reasoning **effort** (`high`/`xhigh`/`max`) + **thinking** indicators · one-line cross-platform installer · 5 size presets (`xs`–`xl`) · JetBrains Mono |
 | **2026-04-01** | **1M-token context window** support (Opus) · usage bars render before the first chat |
 | **2026-01-19** | Multi-mode display system · plugin marketplace |
 | **2026-01-18** | Catppuccin gradient bars · live **5h / 7d** usage-limit monitoring |
@@ -39,8 +40,8 @@ Built to keep pace with Claude Code — recent updates:
 
 - ⚡ **Reasoning effort & thinking** — shows `/effort` (`high`/`xhigh`/`max`) and extended thinking, live from Claude Code's official statusline JSON (and hidden on models that don't support effort).
 - 📊 **5h / 7d usage** — limit bars from the official rate-limit API, so you can see how much budget is left.
-- 🖥️ **No Node, no Nerd Font** — pure Bash + standard emoji, looks right out of the box.
-- 📦 **Auto-installs** its dependencies (`jq`, plus Git Bash on Windows) on macOS, Linux & Windows.
+- 🖥️ **No Node, no Nerd Font** — Bash on macOS/Linux, native PowerShell on Windows, standard emoji everywhere.
+- 📦 **No Windows extras** — Windows uses built-in PowerShell; macOS/Linux auto-install `jq` if needed.
 - 📐 **Five size presets** (`xs`–`xl`) — pick how much you see with one word.
 
 > There are several great Claude Code statuslines out there — this one leans into reasoning-effort/thinking visibility and zero-setup, cross-platform install.
@@ -49,7 +50,7 @@ Built to keep pace with Claude Code — recent updates:
 
 ## 🚀 Quick Install
 
-You don't need to install `jq`, Git, or anything first — the installer does it for you.
+You don't need Node. On Windows, you also don't need `jq`, Git, or Git Bash — the installer uses PowerShell.
 
 **macOS / Linux**
 ```bash
@@ -157,24 +158,24 @@ All colors follow the [Catppuccin](https://catppuccin.com/) palette. No Nerd Fon
 ./install.sh m          # or: curl … | bash -s -- m
 ```
 
-**Uninstall** — remove the `statusLine` entry from `~/.claude/settings.json` (a timestamped backup is created on every install) and delete `~/.claude/awesome-statusline.sh`.
+**Uninstall** — remove the `statusLine` entry from `~/.claude/settings.json` (a timestamped backup is created on every install) and delete `~/.claude/awesome-statusline.sh` or `~/.claude/awesome-statusline.ps1`.
 
 ---
 
-## ✅ Requirements (auto-installed)
+## ✅ Requirements
 
 | Dependency | Why | Installed via |
 |-----------|-----|---------------|
-| `jq` | parse the statusline JSON | brew / apt / dnf / pacman / zypper / apk · winget / scoop / choco |
-| Git Bash *(Windows only)* | run the Bash script on Windows | winget / scoop / choco |
+| `jq` *(macOS/Linux only)* | parse the Bash statusline JSON | brew / apt / dnf / pacman / zypper / apk |
+| PowerShell *(Windows built-in)* | parse and render the Windows statusline | included with Windows |
 
-On Windows, Claude Code runs the statusline through **Git Bash when present, otherwise PowerShell** — so the installer makes sure Git Bash exists and your `.sh` just works.
+On Windows, the installer writes a native `awesome-statusline.ps1` and points Claude Code at `powershell -NoProfile ...`. That avoids Git Bash, `.sh` file association issues, and `jq` PATH problems.
 
 ---
 
 ## 🙋 FAQ
 
-**Does it slow Claude Code down?** No — it's a small Bash script that runs per refresh.
+**Does it slow Claude Code down?** No — it's a small local script that runs per refresh.
 
 **I don't see `⚡effort`.** Your current model doesn't expose the effort parameter, so the field is intentionally hidden. Switch to a model that supports `/effort` (e.g. Opus 4.x).
 
@@ -182,7 +183,7 @@ On Windows, Claude Code runs the statusline through **Git Bash when present, oth
 
 **Where are my old settings?** Every install backs up `settings.json` to `settings.json.backup-<timestamp>` before touching it.
 
-**Statusline is blank, or blank terminal windows keep popping up (Windows)?** Re-run `./install.ps1` — it now invokes the script via `bash` (so Windows doesn't open the `.sh` through its file association) and bundles `jq` next to the script (so it works even when `jq` isn't on PATH). Details: [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+**Statusline is blank, or blank terminal windows keep popping up (Windows)?** Re-run `./install.ps1` — it now installs a native PowerShell renderer and removes the Git Bash / `jq` dependency from the statusline path. Details: [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
 **Characters stack vertically inside tmux?** Enable truecolor in `~/.tmux.conf` (`set -ga terminal-overrides ",xterm-256color:RGB"`) and reload tmux. Details: [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 

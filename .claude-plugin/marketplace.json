@@ -9,8 +9,8 @@
   "plugins": [
     {
       "name": "awesome-statusline",
-      "version": "3.0.0",
-      "description": "A Claude Code statusline that shows reasoning effort and thinking. 5 presets (xsmall-xlarge), Catppuccin, zero-dependency, auto-installs on macOS/Linux/Windows.",
+      "version": "3.1.0",
+      "description": "A Claude Code statusline that shows reasoning effort and thinking. 5 presets (xsmall-xlarge), Catppuccin, no Node/Nerd Font, native PowerShell on Windows.",
       "author": {
         "name": "AwesomeJun",
         "email": "sjkang89@gmail.com"

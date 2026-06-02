@@ -9,20 +9,18 @@
   and a new one is added on every statusline refresh.
 
 ### Cause
-1. **Blank windows** — `settings.json` pointed `statusLine.command` at a **bare
-   `.sh` path**. On Windows a `.sh` path is launched through its *file
-   association*, which is Git Bash's `bash --login -i …`. The `-i` flag opens an
-   interactive window, and stdin/stdout never reach Claude Code.
-2. **Blank content** — the script parses its JSON input with `jq`. If `jq` is not
-   on `PATH` (common right after a `winget install`, before the PATH shim is
-   active) every `jq` call fails and all values come out empty.
+Older installs used a Bash statusline on Windows. That could fail in two ways:
+1. **Blank windows** — a bare `.sh` path could be launched through Windows file
+   association / Git Bash interactive mode, so stdin/stdout never reached
+   Claude Code.
+2. **Blank content** — the Bash renderer needed `jq`; if `jq` was not on `PATH`,
+   every JSON parse failed.
 
 ### Fix — automatic (recommended)
 Re-run the installer. As of this version it:
-- sets the command to **`bash ~/.claude/awesome-statusline.sh`** (runs the file as
-  a script, so no association window is spawned), and
-- copies a **`jq.exe` next to the script** in `~/.claude`. The script prepends its
-  own directory to `PATH` at runtime, so that bundled `jq` is always found.
+- installs a native **`~/.claude/awesome-statusline.ps1`** renderer,
+- sets `statusLine.command` to `powershell -NoProfile -ExecutionPolicy Bypass ...`,
+- no longer requires Git Bash or `jq` on Windows.
 
 ```powershell
 ./install.ps1            # or ./install.ps1 l   (xs/s/m/l/xl)
@@ -34,10 +32,13 @@ ones will be created.
 ### Fix — manual
 1. `~/.claude/settings.json` →
    ```json
-   "statusLine": { "type": "command", "command": "bash ~/.claude/awesome-statusline.sh" }
+   "statusLine": {
+     "type": "command",
+     "command": "powershell -NoProfile -ExecutionPolicy Bypass -File C:/Users/<you>/.claude/awesome-statusline.ps1 -Size large"
+   }
    ```
-2. Put `jq.exe` where the script can find it — copy it into `~/.claude` (the
-   script adds its own folder to `PATH`), or add `jq` to your system `PATH`.
+2. Make sure `awesome-statusline.ps1` exists at that path. The installer copies
+   it from `scripts/awesome-statusline-windows.ps1`.
 
 ---
 
