@@ -145,9 +145,16 @@ THINKING=$(echo "$input" | jq -r '.thinking.enabled // empty')
 [ -n "$EFFORT" ] && MODEL_DISPLAY="${MODEL_DISPLAY} \033[38;2;250;179;135m⚡${EFFORT}${RESET}"
 [ "$THINKING" = "true" ] && MODEL_DISPLAY="${MODEL_DISPLAY} \033[38;2;249;226;175m💡${RESET}"
 
-# Directory (with ~ for home)
+# Directory (shorten $HOME to ~). Built with a case match rather than
+# ${CURRENT_DIR/$HOME_DIR/~}: bash 5.2+ tilde-expands the replacement, turning ~
+# back into $HOME and silently disabling the shortening.
 HOME_DIR="${HOME:-/Users/$USER}"
-DIR_DISPLAY="📂${C_SUBTEXT}${CURRENT_DIR/$HOME_DIR/~}${RESET}"
+case "$CURRENT_DIR" in
+    "$HOME_DIR")    DIR_PATH="~" ;;
+    "$HOME_DIR"/*)  DIR_PATH="~${CURRENT_DIR#$HOME_DIR}" ;;
+    *)              DIR_PATH="$CURRENT_DIR" ;;
+esac
+DIR_DISPLAY="📂${C_SUBTEXT}${DIR_PATH}${RESET}"
 
 # Git
 GIT_DISPLAY=""
