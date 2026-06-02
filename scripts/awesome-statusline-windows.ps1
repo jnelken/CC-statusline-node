@@ -296,7 +296,13 @@ if ($Effort) { $ModelDisplay += " $($C.Peach)⚡$Effort$Reset" }
 $ThinkingText = "$Thinking"
 if ($Thinking -eq $true -or $ThinkingText.ToLowerInvariant() -eq 'true') { $ModelDisplay += " $($C.Yellow)💡$Reset" }
 
-$DirDisplay = "📂 $($C.Subtext)$(Short-Path $CurrentDir)$Reset"
+# Compact modes (xsmall/small) shorten $HOME to ~ to save horizontal space;
+# the roomier modes (medium/large/xlarge) show the full absolute path.
+if ($Mode -eq 'xsmall' -or $Mode -eq 'small') {
+  $DirDisplay = "📂 $($C.Subtext)$(Short-Path $CurrentDir)$Reset"
+} else {
+  $DirDisplay = "📂 $($C.Subtext)$CurrentDir$Reset"
+}
 $BranchDisplay = ''
 if ($GitAvailable -and $Branch) { $BranchDisplay = " $($C.LatteGreen)🌿($Branch)$AheadBehind$Reset" }
 $StyleDisplay = if ($OutputStyle) { "🎨 $($C.Peach)$OutputStyle$Reset" } else { '' }
