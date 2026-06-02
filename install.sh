@@ -205,5 +205,8 @@ ok "Installed Awesome CC Statusline (size: $MODE)"
 echo "  script:   $DEST"
 echo "  settings: $SETTINGS  (statusLine set)"
 echo
-echo "Change size later:  ./install.sh <xsmall|small|medium|large|xlarge>  (or xs/s/m/l/xl)"
 echo "Restart Claude Code (or reload) to see it."
+echo "To switch size later, just ask your AI agent to reinstall at the size you want."
+echo
+echo "⭐ If you like Awesome Statusline, a GitHub star really helps:"
+echo "   https://github.com/AwesomeJun/CC-statusline"
