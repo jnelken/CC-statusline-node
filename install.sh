@@ -79,22 +79,16 @@ ensure_jq() {
 
 # --- pick size --------------------------------------------------------------
 # Precedence: explicit argument > interactive prompt > 'large' default.
-# With no argument and a real terminal on stdin, ask (default large). In
-# non-interactive contexts (e.g. `curl ... | bash`, CI) `[ -t 0 ]` is false so
-# we never block and fall straight through to 'large'.
 MODE="large"
-if [ "$#" -ge 1 ]; then
-  if ! MODE="$(normalize_mode "$1")"; then
-    err "Unknown size: '$1'"
-    err "Valid: xsmall|xs  small|s  medium|m  large|l  xlarge|xl"
-    exit 1
-  fi
-elif [ -t 0 ]; then
+
+# Ask the user which preset to install (default large). Reads from the given fd.
+prompt_size() {
   echo
   echo "Choose a status line size preset:"
   echo "  xsmall | small | medium | large | xlarge   (or xs/s/m/l/xl)"
   echo "  Rendered examples: https://github.com/AwesomeJun/CC-statusline"
   printf 'Size [default: large]: '
+  local answer=""
   read -r answer || answer=""
   if [ -n "$answer" ]; then
     if ! MODE="$(normalize_mode "$answer")"; then
@@ -102,7 +96,25 @@ elif [ -t 0 ]; then
       MODE="large"
     fi
   fi
+}
+
+if [ "$#" -ge 1 ]; then
+  if ! MODE="$(normalize_mode "$1")"; then
+    err "Unknown size: '$1'"
+    err "Valid: xsmall|xs  small|s  medium|m  large|l  xlarge|xl"
+    exit 1
+  fi
+elif [ -t 0 ]; then
+  # Normal `./install.sh` / `bash install.sh` — stdin is the terminal.
+  prompt_size
+elif { exec 3</dev/tty; } 2>/dev/null; then
+  # Piped install (`curl ... | bash`): the script body is on stdin, but a
+  # controlling terminal still exists — prompt through /dev/tty.
+  prompt_size <&3
+  exec 3<&-
 fi
+# Truly non-interactive (CI, Claude Code, redirected stdin with no tty): neither
+# branch runs, so MODE stays 'large' and the install never blocks.
 
 # --- run --------------------------------------------------------------------
 ensure_jq
