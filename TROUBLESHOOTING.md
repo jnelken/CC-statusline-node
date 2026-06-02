@@ -69,6 +69,57 @@ ones will be created.
 
 ---
 
+## Windows — blank statusline on a non-UTF-8 locale (Korean/Japanese/Chinese)
+
+### Symptoms
+- The statusline is completely blank, even though `awesome-statusline.ps1` is
+  installed and `settings.json` is configured correctly.
+- Running the script by hand shows a parser error like:
+  ```
+  At C:\Users\<you>\.claude\awesome-statusline.ps1:NNN char:NN
+  + ... $(Rgb $($End[0]) $($End[1]) $($End[2]))??
+  Unexpected token '$(' in expression or statement.
+  ```
+  The `??` is where the progress-bar glyphs (`█` `░`) should be.
+
+### Cause
+**Windows PowerShell 5.1** does not auto-detect UTF-8. When a `.ps1` file has
+**no BOM**, PS 5.1 reads it using the system **ANSI code page** — `CP949` on a
+Korean system, `CP932`/`CP936` on Japanese/Chinese. The UTF-8 bytes for the
+block glyphs (`█` = `E2 96 88`, `░` = `E2 96 91`) are then decoded as garbage
+tokens that break the parser, so the script crashes on every run.
+
+This does **not** affect macOS/Linux, PowerShell 7+, or Windows systems whose
+ANSI code page is already UTF-8 (65001).
+
+### Fix — automatic (recommended)
+Re-run the installer. As of this version it writes
+`awesome-statusline.ps1` as **UTF-8 *with* BOM**, so PS 5.1 parses it correctly
+regardless of the system code page:
+
+```powershell
+./install.ps1            # or ./install.ps1 l   (xs/s/m/l/xl)
+```
+
+### Fix — manual (older installs, before re-running)
+Re-save the existing file as UTF-8 with BOM, then restart Claude Code:
+
+```powershell
+$path = "$HOME\.claude\awesome-statusline.ps1"
+Copy-Item $path "$path.nobom-backup" -Force
+$text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText($path, $text, ([System.Text.UTF8Encoding]::new($true)))
+```
+
+Verify the file now starts with a BOM (`EF BB BF`):
+
+```powershell
+$b = [System.IO.File]::ReadAllBytes("$HOME\.claude\awesome-statusline.ps1")
+'{0:X2} {1:X2} {2:X2}' -f $b[0],$b[1],$b[2]   # expect: EF BB BF
+```
+
+---
+
 ## macOS / Linux — statusline characters wrap one-per-line inside tmux
 
 ### Symptoms

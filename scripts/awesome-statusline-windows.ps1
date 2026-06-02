@@ -1,4 +1,4 @@
-# Awesome Statusline renderer for Windows PowerShell.
+﻿# Awesome Statusline renderer for Windows PowerShell.
 # Claude Code runs this command from statusLine.command, sends JSON on stdin,
 # and renders whatever this script writes to stdout.
 param([string]$Size = 'large')
@@ -275,6 +275,10 @@ if ((Get-Command git -ErrorAction SilentlyContinue) -and (Test-Path $CurrentDir)
     }
   }
 }
+
+# Outside a git repo, show a muted placeholder (same style as "no env")
+# instead of leaving an awkward empty gap between separators.
+if (-not $GitAvailable) { $GitStatus = "$($C.Overlay)no git$Reset" }
 
 $Conda = [Environment]::GetEnvironmentVariable('CONDA_DEFAULT_ENV')
 $Venv = [Environment]::GetEnvironmentVariable('VIRTUAL_ENV')

@@ -78,12 +78,29 @@ ensure_jq() {
 }
 
 # --- pick size --------------------------------------------------------------
+# Precedence: explicit argument > interactive prompt > 'large' default.
+# With no argument and a real terminal on stdin, ask (default large). In
+# non-interactive contexts (e.g. `curl ... | bash`, CI) `[ -t 0 ]` is false so
+# we never block and fall straight through to 'large'.
 MODE="large"
 if [ "$#" -ge 1 ]; then
   if ! MODE="$(normalize_mode "$1")"; then
     err "Unknown size: '$1'"
     err "Valid: xsmall|xs  small|s  medium|m  large|l  xlarge|xl"
     exit 1
+  fi
+elif [ -t 0 ]; then
+  echo
+  echo "Choose a status line size preset:"
+  echo "  xsmall | small | medium | large | xlarge   (or xs/s/m/l/xl)"
+  echo "  Rendered examples: https://github.com/AwesomeJun/CC-statusline"
+  printf 'Size [default: large]: '
+  read -r answer || answer=""
+  if [ -n "$answer" ]; then
+    if ! MODE="$(normalize_mode "$answer")"; then
+      echo "Unknown size '$answer', using 'large'."
+      MODE="large"
+    fi
   fi
 fi
 
