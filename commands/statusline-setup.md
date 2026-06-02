@@ -15,8 +15,10 @@ There are **five** size presets, smallest to largest: `xsmall` · `small` ·
 - Otherwise, ask with **AskUserQuestion**. The tool allows at most 4 options, so
   show the four smallest as options and route `xlarge` + customization through
   the auto-provided **Other** choice:
-  - **Question text:** note that there are 5 presets total and name them, e.g.
-    "어느 사이즈로 설치할까요? (총 5개 프리셋: xsmall·small·medium·large·xlarge)".
+  - **Question text:** use the same wording as the installer (install.sh) prompt,
+    matching the user's language:
+    - Korean: "statusline을 어떤 사이즈로 설치할까요? (XSmall-Small-Medium-Large-XLarge, 예시는 github에서 확인)"
+    - English: "Which size would you like to install? (XSmall-Small-Medium-Large-XLarge; see examples on GitHub)"
   - **Option 1 — `xsmall` (xs):** 2 lines, 10-block bars, minimal.
   - **Option 2 — `small` (s):** 2 lines, 10-block bars, labels + %.
   - **Option 3 — `medium` (m):** 4 lines, classic layout.
