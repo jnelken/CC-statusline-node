@@ -187,7 +187,7 @@ fi
 STYLE_DISPLAY=""
 [[ -n "$OUTPUT_STYLE" ]] && STYLE_DISPLAY="🎨 $(cat_peach)${OUTPUT_STYLE}${RESET}"
 
-LINE1="${MODEL_DISPLAY} | ${GIT_STATUS_DISPLAY} | ${ENV_DISPLAY} | ${STYLE_DISPLAY}"
+LINE1="${MODEL_DISPLAY} │ ${GIT_STATUS_DISPLAY} │ ${ENV_DISPLAY} │ ${STYLE_DISPLAY}"
 
 # ============================================================================
 # Line 2: Directory + Branch | Cost | Duration
@@ -229,7 +229,7 @@ else
     DURATION_DISPLAY="⏰ $(cat_overlay)0s${RESET}"
 fi
 
-LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} | ${COST_DISPLAY} | ${DURATION_DISPLAY}"
+LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} │ ${COST_DISPLAY} │ ${DURATION_DISPLAY}"
 
 # ============================================================================
 # Line 3: Context (20 blocks)
