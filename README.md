@@ -62,6 +62,13 @@ curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/insta
 irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex
 ```
 
+If your security software blocks `irm | iex`, download the installer first, inspect it, then run it:
+```powershell
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 -OutFile .\install.ps1
+notepad .\install.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
+```
+
 To choose a specific size, append it explicitly:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xl

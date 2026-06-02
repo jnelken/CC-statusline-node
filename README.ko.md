@@ -62,6 +62,13 @@ curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/insta
 irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex
 ```
 
+보안 프로그램이 `irm | iex`를 막으면, 먼저 파일로 내려받아 확인한 뒤 실행하세요:
+```powershell
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 -OutFile .\install.ps1
+notepad .\install.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
+```
+
 특정 크기를 원하면 명시적으로 붙이면 됩니다:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xl

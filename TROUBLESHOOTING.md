@@ -1,5 +1,32 @@
 # Troubleshooting
 
+## Windows — security software blocks `irm | iex`
+
+### Symptoms
+- PowerShell refuses to run the one-line installer.
+- Endpoint security, Defender policy, or a company device policy blocks
+  `Invoke-RestMethod ... | Invoke-Expression`.
+
+### Fix
+Download the installer first, inspect it, then run the local file:
+
+```powershell
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 -OutFile .\install.ps1
+notepad .\install.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+To choose a size:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 small
+```
+
+This keeps the quick install available, but avoids executing a remote script
+directly through a pipeline.
+
+---
+
 ## Windows — blank statusline and/or empty bash windows keep popping up
 
 ### Symptoms
