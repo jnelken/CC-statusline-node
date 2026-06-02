@@ -147,3 +147,64 @@ tmux kill-server   # or: tmux source-file ~/.tmux.conf  (then restart the sessio
 If wrapping persists after enabling truecolor, the cause is emoji/wide-glyph
 width rather than color — switch to a lighter mode (`compact` / `small`), which
 uses fewer wide glyphs.
+
+---
+
+## macOS / Linux — `curl … | bash` install fails with `BASH_SOURCE[0]: unbound variable`
+
+### Symptoms
+Running the recommended one-line installer dies immediately:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh | bash -s -- xs
+```
+
+```
+bash: line NN: BASH_SOURCE[0]: unbound variable
+bash: line NN: cd: null directory
+```
+
+### Cause
+When the script is piped into `bash` (rather than run as a file), `BASH_SOURCE`
+is unset. Combined with `set -euo pipefail` (the `-u` flag forbids unbound
+variables), referencing `${BASH_SOURCE[0]}` to compute the script's own
+directory crashes before the installer can do anything.
+
+### Fix — automatic (recommended)
+Already fixed as of this version: `install.sh` guards the lookup with
+`${BASH_SOURCE:-}` and falls back to downloading the repo when the path is
+unknown (the `curl | bash` case). Just re-run the installer.
+
+### Fix — manual (older copies)
+Download and run the file instead of piping, which gives `BASH_SOURCE` a real
+value:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.sh -o install.sh
+bash install.sh xs
+```
+
+---
+
+## Any OS — segment dividers look broken (gap in the middle of `|`)
+
+### Symptoms
+The vertical dividers between statusline segments (Model / Git / Env / Style,
+Dir / Cost / Duration) render with a gap in the middle instead of a continuous
+line.
+
+### Cause
+Older versions drew the divider with the **ASCII pipe `|` (U+007C)**. Many
+terminal/programming fonts render that glyph shorter than the line height, or as
+a "broken bar (¦)" — so it looks split. This is a glyph-choice issue, not a
+script bug. Box-drawing `│` (U+2502) is designed to fill the full line height
+and join continuously.
+
+### Fix
+Already fixed as of `v3.2.5`: the `small` / `medium` / `large` / `xlarge`
+renderers use box-drawing `│` (U+2502) for dividers. Re-run the installer to
+pick up the updated script. (`xsmall` uses no dividers, so it is unaffected.)
+
+If `│` still shows a faint gap in your particular font, switch the divider
+glyph to a heavier variant — `┃` (U+2503, bold) or `║` (U+2551, double) — in
+`~/.claude/awesome-statusline.sh`.
