@@ -154,7 +154,7 @@ THINKING=$(echo "$input" | jq -r '.thinking.enabled // empty')
 
 # Output style
 STYLE_DISPLAY=""
-[[ -n "$OUTPUT_STYLE" ]] && STYLE_DISPLAY=" | 🎨 ${C_PEACH}${OUTPUT_STYLE}${RESET}"
+[[ -n "$OUTPUT_STYLE" ]] && STYLE_DISPLAY=" │ 🎨 ${C_PEACH}${OUTPUT_STYLE}${RESET}"
 
 # Directory (shorten $HOME to ~). Built with a case match rather than
 # ${CURRENT_DIR/$HOME/~}: bash 5.2+ tilde-expands the replacement, turning ~
@@ -188,7 +188,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     fi
 fi
 
-LINE1="${MODEL_DISPLAY}${STYLE_DISPLAY} | ${DIR_DISPLAY} ${GIT_DISPLAY}"
+LINE1="${MODEL_DISPLAY}${STYLE_DISPLAY} │ ${DIR_DISPLAY} ${GIT_DISPLAY}"
 
 # ============================================================================
 # Line 2: Context + 5H + 7D
@@ -253,7 +253,7 @@ if [[ -n "$FIVE_HOUR_PCT" ]]; then
     FIVE_DISPLAY="${C_LAVENDER}5H${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} (${FIVE_RESET_FMT})"
     SEVEN_DISPLAY="${C_YELLOW}7D${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} (${SEVEN_RESET_FMT})"
 
-    LINE2="${CTX_DISPLAY} | ${FIVE_DISPLAY} | ${SEVEN_DISPLAY}"
+    LINE2="${CTX_DISPLAY} │ ${FIVE_DISPLAY} │ ${SEVEN_DISPLAY}"
 else
     FIVE_BAR=$(generate_bar 0 10 "5h")
     SEVEN_BAR=$(generate_bar 0 10 "7d")
@@ -261,7 +261,7 @@ else
     SEVEN_END_COLOR=$(get_usage_7d_gradient_color 0)
     FIVE_DISPLAY="${C_LAVENDER}5H${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m0%${RESET}"
     SEVEN_DISPLAY="${C_YELLOW}7D${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m0%${RESET}"
-    LINE2="${CTX_DISPLAY} | ${FIVE_DISPLAY} | ${SEVEN_DISPLAY} ${C_OVERLAY}(loading..)${RESET}"
+    LINE2="${CTX_DISPLAY} │ ${FIVE_DISPLAY} │ ${SEVEN_DISPLAY} ${C_OVERLAY}(loading..)${RESET}"
 fi
 
 # ============================================================================

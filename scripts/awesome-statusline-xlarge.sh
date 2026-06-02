@@ -230,8 +230,8 @@ fi
 
 # Build Line 1: Model | Style | Git | Env
 LINE1="${MODEL_DISPLAY}"
-[[ -n "$STYLE_DISPLAY" ]] && LINE1="${LINE1} | ${STYLE_DISPLAY}"
-LINE1="${LINE1} | ${GIT_STATUS_DISPLAY} | ${ENV_DISPLAY}"
+[[ -n "$STYLE_DISPLAY" ]] && LINE1="${LINE1} │ ${STYLE_DISPLAY}"
+LINE1="${LINE1} │ ${GIT_STATUS_DISPLAY} │ ${ENV_DISPLAY}"
 
 # ============================================================================
 # Line 2: Directory + Branch | Cost | Duration
@@ -271,7 +271,7 @@ else
     DURATION_DISPLAY="⏰ $(cat_overlay)0m${RESET}"
 fi
 
-LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} | ${COST_DISPLAY} | ${DURATION_DISPLAY}"
+LINE2="${DIR_DISPLAY}${BRANCH_DISPLAY} │ ${COST_DISPLAY} │ ${DURATION_DISPLAY}"
 
 # ============================================================================
 # Line 3: Context (20 blocks)

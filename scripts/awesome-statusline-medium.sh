@@ -185,10 +185,10 @@ fi
 # Output style
 OUTPUT_STYLE_DISPLAY=""
 if [[ -n "$OUTPUT_STYLE" ]]; then
-    OUTPUT_STYLE_DISPLAY=" | 🎨 ${C_LAVENDER}${OUTPUT_STYLE}${RESET}"
+    OUTPUT_STYLE_DISPLAY=" │ 🎨 ${C_LAVENDER}${OUTPUT_STYLE}${RESET}"
 fi
 
-LINE1="${BOLD}${MODEL_DISPLAY}${RESET} | ${GIT_STATUS} | ${CONDA_ENV}${OUTPUT_STYLE_DISPLAY}"
+LINE1="${BOLD}${MODEL_DISPLAY}${RESET} │ ${GIT_STATUS} │ ${CONDA_ENV}${OUTPUT_STYLE_DISPLAY}"
 
 # ============================================================================
 # LINE 2: 🌿 Git Branch + Directory Path
@@ -279,7 +279,7 @@ if [[ -n "$FIVE_HOUR_PCT" ]]; then
     FIVE_END_COLOR=$(get_usage_gradient_color "$FIVE_HOUR")
     SEVEN_END_COLOR=$(get_usage_gradient_color "$SEVEN_DAY")
 
-    LINE4="🚀 \033[38;2;${FIVE_END_COLOR}mUsage 5H${RESET} ${FIVE_BAR} \033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} ${C_OVERLAY}(${FIVE_RESET_FMT})${RESET} | \033[38;2;${SEVEN_END_COLOR}m7D${RESET} ${SEVEN_BAR} \033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} ${C_OVERLAY}(${SEVEN_RESET_FMT})${RESET}"
+    LINE4="🚀 \033[38;2;${FIVE_END_COLOR}mUsage 5H${RESET} ${FIVE_BAR} \033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} ${C_OVERLAY}(${FIVE_RESET_FMT})${RESET} │ \033[38;2;${SEVEN_END_COLOR}m7D${RESET} ${SEVEN_BAR} \033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} ${C_OVERLAY}(${SEVEN_RESET_FMT})${RESET}"
 else
     LINE4="${C_OVERLAY}🚀 Usage: unavailable${RESET}"
 fi
