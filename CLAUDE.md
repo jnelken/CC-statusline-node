@@ -1,46 +1,46 @@
 # Claude Code Install Notes
 
-When asked to install this repo, ask the size first, then run the installer.
-Keep it plain: post the menu below **verbatim** and wait for the reply. Just
-show the menu — do not narrate install rules, version numbers, or release notes.
+When asked to install this repo: ask the size, then run the installer.
 
-Do **not** use the AskUserQuestion tool here: it caps at 4 options, and this
-menu has 5 (xsmall is dropped or shuffled every time it's forced into 4). Post
-the menu as a normal message instead.
-
-Post this menu exactly, then wait for a reply. **Default to the English block.**
-Use the Korean block only when the user is actually writing to you in Korean.
+**How to ask — output the menu below as a plain text message, directly.**
+Never call the AskUserQuestion tool, and never explain why (do not mention
+tools, widgets, option limits, or "5 presets won't fit"). No preamble — just
+post the menu. Copy it verbatim; don't reword the lines.
 
 English:
 
 ```
-Which size would you like to install? (examples on GitHub: https://github.com/AwesomeJun/CC-statusline)
+Which size would you like to install? (size examples on GitHub: https://github.com/AwesomeJun/CC-statusline)
 
-  1. xsmall (xs) — Smallest, essentials only. For narrow screens.
-  2. small  (s) — Space-saving, key info only.
-  3. medium (m) — Balance of detail and space.
-  4. large  (l) — Default. Shows most info.
-  5. xlarge (xl) — Largest, full detail (git ahead/behind, env).
+  1. xsmall (xs) — smallest, essentials only
+  2. small  (s)  — space-saving, key info
+  3. medium (m)  — balanced layout
+  4. large  (l)  — recommended default, shows the most info
+  5. xlarge (xl) — largest, full detail (git ahead/behind, env)
 
-Reply with a number or name [default: 4 / large].
+Reply with a number or name. If unsure, large (4) is recommended. [default: large]
 ```
 
 Korean:
 
 ```
-statusline을 어떤 사이즈로 설치할까요? (예시는 GitHub에서 확인: https://github.com/AwesomeJun/CC-statusline)
+어떤 크기로 설치할까요? (크기 예시는 GitHub에서 확인: https://github.com/AwesomeJun/CC-statusline)
 
-  1. xsmall (xs) — 가장 작게, 핵심만. 좁은 화면용.
-  2. small  (s) — 공간 절약, 주요 정보만.
-  3. medium (m) — 정보량과 공간의 균형.
-  4. large  (l) — 기본값. 대부분 정보 표시.
-  5. xlarge (xl) — 가장 크게, 모든 정보 (git ahead/behind, env).
+  1. xsmall (xs) — 가장 작게, 핵심만
+  2. small  (s)  — 공간 절약, 주요 정보
+  3. medium (m)  — 균형 잡힌 레이아웃
+  4. large  (l)  — 추천 기본값, 대부분의 정보 표시
+  5. xlarge (xl) — 가장 크게, 전체 상세 (git ahead/behind, env)
 
-번호나 이름으로 답해 주세요 [기본값: 4 / large].
+번호나 이름으로 답해 주세요. 잘 모르겠으면 large(4)를 추천합니다. [기본값: large]
 ```
 
+**Default to the English block.** Use the Korean block only when the user is
+actually writing to you in Korean.
+
 The reply maps to: `1`/`xs` → xsmall, `2`/`s` → small, `3`/`m` → medium,
-`4`/`l` → large, `5`/`xl` → xlarge. An empty reply means large.
+`4`/`l` → large, `5`/`xl` → xlarge. An empty reply or "recommended"/"default"
+means large.
 
 Then install with that size:
 
@@ -53,6 +53,15 @@ Shortcuts:
   and install that size directly.
 - In a non-interactive session (`claude -p`, hooks, automation) where you can't
   wait for a reply, install `large` directly.
+
+**After installing**, tell the user (in their language):
+
+1. It's done — restart/reload Claude Code to see it.
+2. To change size later, they can just give you this repo's GitHub URL again and
+   ask for the size they want — you'll reinstall. Do **not** print curl/CLI
+   commands for this; keep it natural-language.
+3. If they like Awesome Statusline, a GitHub star really helps —
+   https://github.com/AwesomeJun/CC-statusline
 
 The installer copies the statusline script into `~/.claude/awesome-statusline.*`,
 updates `~/.claude/settings.json`, and makes a timestamped backup before
