@@ -58,17 +58,66 @@ if ($Size) {
     Write-Err "Valid: xsmall|xs  small|s  medium|m  large|l  xlarge|xl"
     exit 1
   }
-} elseif ([Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+} elseif ([Environment]::UserInteractive) {
+  # Korean UI culture? Show the prompt in Korean; otherwise default to English.
+  $isKo = ([Globalization.CultureInfo]::CurrentUICulture.TwoLetterISOLanguageName -eq 'ko')
   Write-Host ""
-  Write-Host "Choose a status line size preset:"
-  Write-Host "  xsmall | small | medium | large | xlarge   (or xs/s/m/l/xl)"
-  Write-Host "  Rendered examples: https://github.com/AwesomeJun/CC-statusline"
-  $answer = Read-Host "Size [default: large]"
-  if (-not [string]::IsNullOrWhiteSpace($answer)) {
-    $Mode = Normalize-Mode $answer
-    if (-not $Mode) {
-      Write-Host "Unknown size '$answer', using 'large'."
-      $Mode = 'large'
+  if ($isKo) {
+    Write-Host "statusline을 어떤 사이즈로 설치할까요? (XSmall-Small-Medium-Large-XLarge, 예시는 github에서 확인)"
+    Write-Host "  예시: https://github.com/AwesomeJun/CC-statusline"
+    Write-Host ""
+    Write-Host "  1. xsmall (xs)"
+    Write-Host "     가장 작게 — 핵심 정보만 최소 표시. 좁은 화면용."
+    Write-Host "  2. small (s)"
+    Write-Host "     작게 — 공간 절약, 주요 정보만."
+    Write-Host "  3. medium (m)"
+    Write-Host "     중간 — 정보량과 공간의 균형."
+    Write-Host "  4. large (l)"
+    Write-Host "     크게 — 현재 기본값. 대부분 정보 표시."
+    Write-Host "  5. xlarge (xl)"
+    Write-Host "     가장 크게 — 모든 정보 표시 (git ahead/behind, env)."
+    Write-Host ""
+    Write-Host -NoNewline "선택 [기본값: 4]: "
+  } else {
+    Write-Host "Which size would you like to install? (XSmall-Small-Medium-Large-XLarge; see examples on GitHub)"
+    Write-Host "  Examples: https://github.com/AwesomeJun/CC-statusline"
+    Write-Host ""
+    Write-Host "  1. xsmall (xs)"
+    Write-Host "     Smallest — only the essentials. For narrow screens."
+    Write-Host "  2. small (s)"
+    Write-Host "     Small — space-saving, key info only."
+    Write-Host "  3. medium (m)"
+    Write-Host "     Medium — balance of detail and space."
+    Write-Host "  4. large (l)"
+    Write-Host "     Large — current default. Shows most info."
+    Write-Host "  5. xlarge (xl)"
+    Write-Host "     Largest — full detail (git ahead/behind, env)."
+    Write-Host ""
+    Write-Host -NoNewline "Choice [default: 4]: "
+  }
+  # Under `irm ... | iex` the downloaded script occupies the pipeline, so a plain
+  # Read-Host can be skipped (the PowerShell analog of the bash `curl | bash`
+  # stdin problem fixed via /dev/tty). Read from the console host directly; if no
+  # real console is attached (CI, non-interactive host) ReadLine throws and we
+  # fall through to the 'large' default instead of blocking.
+  $answer = ''
+  try { $answer = $Host.UI.ReadLine() } catch { $answer = '' }
+  $answer = $answer.Trim()
+  switch ($answer) {
+    '1'  { $Mode = 'xsmall' }
+    '2'  { $Mode = 'small'  }
+    '3'  { $Mode = 'medium' }
+    '4'  { $Mode = 'large'  }
+    ''   { $Mode = 'large'  }
+    '5'  { $Mode = 'xlarge' }
+    default {
+      # Allow typing a size name/alias directly instead of a number.
+      $Mode = Normalize-Mode $answer
+      if (-not $Mode) {
+        if ($isKo) { Write-Host "알 수 없는 입력 '$answer' — 'large'로 설치합니다." }
+        else       { Write-Host "Unknown input '$answer', using 'large'." }
+        $Mode = 'large'
+      }
     }
   }
 }

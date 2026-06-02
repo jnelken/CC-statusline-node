@@ -1,6 +1,6 @@
 # Claude Code Install Notes
 
-When a user gives this repository URL and asks Claude Code to install it, install the statusline directly instead of asking them to choose a preset.
+When a user gives this repository URL and asks Claude Code to install it, ask which size they want (XSmall / Small / Medium / Large / XLarge — examples on GitHub), then install with that size. If they don't have a preference, default to Large.
 
 Use the platform-appropriate installer:
 
