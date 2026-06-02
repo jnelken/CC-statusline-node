@@ -28,7 +28,14 @@ set -euo pipefail
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 SETTINGS="$CLAUDE_DIR/settings.json"
 DEST="$CLAUDE_DIR/awesome-statusline.sh"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Resolve script dir safely. Under `curl ... | bash` the script arrives on
+# stdin, so BASH_SOURCE is unset — with `set -u` that would crash here. Fall
+# back to an empty SCRIPT_DIR, which routes us to the repo-download branch.
+if [ -n "${BASH_SOURCE:-}" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+else
+  SCRIPT_DIR=""
+fi
 SRC_DIR="$SCRIPT_DIR/scripts"
 REPO_RAW="${AWESOME_STATUSLINE_RAW:-https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main}"
 
@@ -81,21 +88,70 @@ ensure_jq() {
 # Precedence: explicit argument > interactive prompt > 'large' default.
 MODE="large"
 
+# Korean locale? Show the prompt in Korean; otherwise default to English.
+is_korean_locale() {
+  case "${LC_ALL:-${LC_MESSAGES:-${LANG:-}}}" in
+    ko|ko_*|ko.*|ko-*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 # Ask the user which preset to install (default large). Reads from the given fd.
 prompt_size() {
   echo
-  echo "Choose a status line size preset:"
-  echo "  xsmall | small | medium | large | xlarge   (or xs/s/m/l/xl)"
-  echo "  Rendered examples: https://github.com/AwesomeJun/CC-statusline"
-  printf 'Size [default: large]: '
+  if is_korean_locale; then
+    echo "statusline을 어떤 사이즈로 설치할까요? (XSmall-Small-Medium-Large-XLarge, 예시는 github에서 확인)"
+    echo "  예시: https://github.com/AwesomeJun/CC-statusline"
+    echo
+    echo "  1. xsmall (xs)"
+    echo "     가장 작게 — 핵심 정보만 최소 표시. 좁은 화면용."
+    echo "  2. small (s)"
+    echo "     작게 — 공간 절약, 주요 정보만."
+    echo "  3. medium (m)"
+    echo "     중간 — 정보량과 공간의 균형."
+    echo "  4. large (l)"
+    echo "     크게 — 현재 기본값. 대부분 정보 표시."
+    echo "  5. xlarge (xl)"
+    echo "     가장 크게 — 모든 정보 표시 (git ahead/behind, env)."
+    echo
+    printf '선택 [기본값: 4]: '
+  else
+    echo "Which size would you like to install? (XSmall-Small-Medium-Large-XLarge; see examples on GitHub)"
+    echo "  Examples: https://github.com/AwesomeJun/CC-statusline"
+    echo
+    echo "  1. xsmall (xs)"
+    echo "     Smallest — only the essentials. For narrow screens."
+    echo "  2. small (s)"
+    echo "     Small — space-saving, key info only."
+    echo "  3. medium (m)"
+    echo "     Medium — balance of detail and space."
+    echo "  4. large (l)"
+    echo "     Large — current default. Shows most info."
+    echo "  5. xlarge (xl)"
+    echo "     Largest — full detail (git ahead/behind, env)."
+    echo
+    printf 'Choice [default: 4]: '
+  fi
   local answer=""
   read -r answer || answer=""
-  if [ -n "$answer" ]; then
-    if ! MODE="$(normalize_mode "$answer")"; then
-      echo "Unknown size '$answer', using 'large'."
-      MODE="large"
-    fi
-  fi
+  case "$answer" in
+    1)     MODE="xsmall" ;;
+    2)     MODE="small"  ;;
+    3)     MODE="medium" ;;
+    4|"")  MODE="large"  ;;
+    5)     MODE="xlarge" ;;
+    *)
+      # Allow typing a size name/alias directly instead of a number.
+      if ! MODE="$(normalize_mode "$answer")"; then
+        if is_korean_locale; then
+          echo "알 수 없는 입력 '$answer' — 'large'로 설치합니다."
+        else
+          echo "Unknown input '$answer', using 'large'."
+        fi
+        MODE="large"
+      fi
+      ;;
+  esac
 }
 
 if [ "$#" -ge 1 ]; then
