@@ -24,7 +24,7 @@ Which size would you like to install? (size examples on GitHub: https://github.c
   2. small  (s)  — space-saving, key info
   3. medium (m)  — balanced layout
   4. large  (l)  — recommended default, shows the most info
-  5. xlarge (xl) — largest, full detail (git ahead/behind, env)
+  5. xlarge (xl) — largest, full detail
 
 Reply with a number or name. If unsure, large (4) is recommended. [default: large]
 ```
@@ -38,7 +38,7 @@ Korean:
   2. small  (s)  — 공간 절약, 주요 정보
   3. medium (m)  — 균형 잡힌 레이아웃
   4. large  (l)  — 추천 기본값, 대부분의 정보 표시
-  5. xlarge (xl) — 가장 크게, 전체 상세 (git ahead/behind, env)
+  5. xlarge (xl) — 가장 크게, 전체 상세
 
 번호나 이름으로 답해 주세요. 잘 모르겠으면 large(4)를 추천합니다. [기본값: large]
 ```
