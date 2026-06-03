@@ -112,25 +112,25 @@ xsmall ─ 2줄
 🧠████░░░░░░ 5H████░░░░░░ 7D██░░░░░░░░
 
 small ─ 2줄
-🤖 Opus 4.8 ⚡high 💡 | 🎨 default | 📂 ~/project 🌿(main)
-🧠 Context ████░░░░░░ 43% | 5H ████░░░░░░ 42% | 7D ██░░░░░░░░ 18%
+🤖 Opus 4.8 ⚡high 💡 │ 🎨 default │ 📂 ~/project 🌿(main)
+🧠 Context ████░░░░░░ 43% │ 5H ████░░░░░░ 42% │ 7D ██░░░░░░░░ 18%
 
 medium ─ 4줄
-🧠 Opus 4.8 ⚡high 💡 | 🚧 dirty | no conda | 🎨 default
+🧠 Opus 4.8 ⚡high 💡 │ 🚧 dirty │ no conda │ 🎨 default
 📂 ~/project 🌿(main)
 📝 Context █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used
-🚀 Usage 5H ████░░░░░░ 42% | 7D ██░░░░░░░░ 18%
+🚀 Usage 5H ████░░░░░░ 42% │ 7D ██░░░░░░░░ 18%
 
 large ─ 5줄
-🤖 Opus 4.8 ⚡high 💡 | 📝 +5 !12 | 🐍 venv | 🎨 default
-📂 ~/project 🌿(main) | 💰 1.23$ | ⏰ 1h2m
+🤖 Opus 4.8 ⚡high 💡 │ 📝 +5 !12 │ 🐍 venv │ 🎨 default
+📂 ~/project 🌿(main) │ 💰 1.23$ │ ⏰ 1h2m
 🧠 Context  █████████░░░░░░░░░░░ 43% used (87k/200k)
 🚀 Usage 5H ████████░░░░░░░░░░░░ 42% (Reset 2h15m left)
 ⭐ Usage 7D ████░░░░░░░░░░░░░░░░ 18% (Reset Thu 19:00)
 
 xlarge ─ 5줄
-🤖 Opus 4.8 ⚡high 💡 | 🎨 default | 📝 dirty +5 !12 | 🐍 venv
-📂 ~/project 🌿(main) | 💰 1.23$ | ⏰ 1h2m
+🤖 Opus 4.8 ⚡high 💡 │ 🎨 default │ 📝 dirty +5 !12 │ 🐍 venv
+📂 ~/project 🌿(main) │ 💰 1.23$ │ ⏰ 1h2m
 🧠 Context  █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used (87k/200k)
 🚀 5H Limit █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 42% (Resets in 2h15m)
 🌟 7D Limit ███████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 18% (Resets Dec 31 at 7pm)
