@@ -44,12 +44,14 @@
 #    Step 1 — question text (use exactly this, on one line):
 #      EN: Which size would you like to install? (size examples on GitHub: https://github.com/AwesomeJun/CC-statusline)
 #      KO: 어떤 크기로 설치할까요? (크기 예시는 GitHub에서 확인: https://github.com/AwesomeJun/CC-statusline)
-#    Step 1 — four options, in this order (large is the recommended default):
-#      1. xlarge (xl) — largest, full detail            / 가장 크게, 전체 상세
-#      2. large  (l)  — recommended default, most info   / 추천 기본값, 대부분 정보
-#      3. medium (m)  — balanced layout                  / 균형 잡힌 레이아웃
+#    Step 1 — four options, in EXACTLY this order (do NOT reorder). The
+#    recommended option is ALWAYS large (option 1) — never substitute medium
+#    or anything else as the recommendation:
+#      1. large  (l)  (추천 / Recommended) — most info, good for most users / 추천 기본값
+#      2. xlarge (xl) — largest, full detail            / 가장 크게, 전체 상세
+#      3. medium (m)  — balanced layout                 / 균형 잡힌 레이아웃
 #      4. small / xsmall — the two smallest, pick this to choose between them
-#                                                        / 작은 두 가지 (고르면 한 번 더 선택)
+#                                                       / 작은 두 가지 (고르면 한 번 더 선택)
 #    Step 2 — ONLY if the user picked option 4, ask again:
 #      EN: Which of the two smaller sizes?   KO: 작은 쪽 중 무엇으로 설치할까요?
 #      1. small  (s)  — space-saving, key info           / 공간 절약, 주요 정보
