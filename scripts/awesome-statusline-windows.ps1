@@ -291,7 +291,7 @@ if ($Conda) {
 }
 
 $ModelDisplay = "🤖 $Bold$($C.Teal)$Model$Reset"
-if ($Mode -eq 'xsmall') { $ModelDisplay = "🤖$Bold$($C.Teal)$(Short-Model $Model)$Reset" }
+if ($Mode -eq 'xsmall') { $ModelDisplay = "🤖 $Bold$($C.Teal)$(Short-Model $Model)$Reset" }
 if ($Effort) { $ModelDisplay += " $($C.Peach)⚡$Effort$Reset" }
 $ThinkingText = "$Thinking"
 if ($Thinking -eq $true -or $ThinkingText.ToLowerInvariant() -eq 'true') { $ModelDisplay += " $($C.Yellow)💡$Reset" }
@@ -319,14 +319,22 @@ switch ($Mode) {
         $Line1 += "$($C.LatteYellow)📝$Reset"
       }
     }
-    $Line2 = "🧠$(Bar $ContextPct 10 'context') $($C.Lavender)5H$Reset$(Bar $FiveHourPct 10 '5h') $($C.Yellow)7D$Reset$(Bar $SevenDayPct 10 '7d')"
+    $Line2 = "🧠 $(Bar $ContextPct 10 'context') $($C.Lavender)5H$Reset$(Bar $FiveHourPct 10 '5h') $($C.Yellow)7D$Reset$(Bar $SevenDayPct 10 '7d')"
     if (-not $HasRateLimits) { $Line2 += " $($C.Overlay)(loading..)$Reset" }
     [Console]::WriteLine("$Line1$ClearLine")
     [Console]::WriteLine("$Line2$ClearLine")
   }
   'small' {
     $Line1 = "$ModelDisplay │ $StyleDisplay │ $DirDisplay$BranchDisplay"
-    $Line2 = "🧠 Context $(Bar $ContextPct 10 'context') ${ContextPct}% │ 5H $(Bar $FiveHourPct 10 '5h') ${FiveHourPct}% │ 7D $(Bar $SevenDayPct 10 '7d') ${SevenDayPct}%"
+    # Match the Bash renderer's colours: pink/lavender/yellow labels, and each
+    # percentage in its bar's gradient end-colour, bold.
+    $CtxEnd = Context-Color $ContextPct
+    $FiveEnd = Usage-Color $FiveHourPct
+    $SevenEnd = Usage7D-Color $SevenDayPct
+    $CtxPct = "$Bold$(Rgb $CtxEnd[0] $CtxEnd[1] $CtxEnd[2])${ContextPct}%$Reset"
+    $FivePct = "$Bold$(Rgb $FiveEnd[0] $FiveEnd[1] $FiveEnd[2])${FiveHourPct}%$Reset"
+    $SevenPct = "$Bold$(Rgb $SevenEnd[0] $SevenEnd[1] $SevenEnd[2])${SevenDayPct}%$Reset"
+    $Line2 = "🧠 $($C.Pink)Context$Reset $(Bar $ContextPct 10 'context') $CtxPct │ $($C.Lavender)5H$Reset $(Bar $FiveHourPct 10 '5h') $FivePct │ $($C.Yellow)7D$Reset $(Bar $SevenDayPct 10 '7d') $SevenPct"
     if (-not $HasRateLimits) { $Line2 += " $($C.Overlay)(loading..)$Reset" }
     [Console]::WriteLine("$Line1$ClearLine")
     [Console]::WriteLine("$Line2$ClearLine")
