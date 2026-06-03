@@ -201,10 +201,60 @@ script bug. Box-drawing `│` (U+2502) is designed to fill the full line height
 and join continuously.
 
 ### Fix
-Already fixed as of `v3.2.5`: the `small` / `medium` / `large` / `xlarge`
-renderers use box-drawing `│` (U+2502) for dividers. Re-run the installer to
-pick up the updated script. (`xsmall` uses no dividers, so it is unaffected.)
+Already fixed: **both** the macOS/Linux Bash renderers (`small` / `medium` /
+`large` / `xlarge`) **and** the Windows PowerShell renderer
+(`awesome-statusline-windows.ps1`) use box-drawing `│` (U+2502) for dividers.
+Re-run the installer to pick up the updated script. (`xsmall` uses no dividers,
+so it is unaffected.)
+
+> Note: the divider lives in two separate renderers (Bash + PowerShell). Both
+> must use `│`; a fix to one does not propagate to the other. If you change the
+> divider glyph, change it in every `scripts/awesome-statusline-*.sh` **and** in
+> `scripts/awesome-statusline-windows.ps1`.
 
 If `│` still shows a faint gap in your particular font, switch the divider
 glyph to a heavier variant — `┃` (U+2503, bold) or `║` (U+2551, double) — in
 `~/.claude/awesome-statusline.sh`.
+
+---
+
+## Any OS — Claude Code "auto mode" blocks the install
+
+### Symptoms
+You ask Claude Code (with **auto mode on** — the `shift+tab` auto-accept state)
+to install the statusline, and instead of installing it stops and says the
+action is blocked by auto-mode policy — both running the installer
+(`-ExecutionPolicy Bypass` / `curl … | bash`) and writing the renderer to
+`~/.claude` so it runs on every launch.
+
+### Cause
+This is **expected, correct safety behavior — not a bug.** The install fetches
+third-party code from a remote repo and wires it to run automatically every time
+Claude Code starts. Auto-accept mode silently approves tool calls, and silently
+approving "download remote code and persist it as an always-on hook" is exactly
+the kind of action that should require an explicit human decision. So the agent
+declines to do it unattended.
+
+### Fix — pick one
+1. **Run it yourself with the `!` prefix (recommended, most transparent).** In
+   the Claude Code prompt, prefix the command with `!` so it runs in your shell
+   and the output comes back into the session — no agent auto-approval of remote
+   execution involved:
+   ```
+   # macOS / Linux
+   ! bash install.sh           # or: ! bash install.sh xl
+   ```
+   ```
+   # Windows PowerShell
+   ! irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex
+   ```
+2. **Leave auto mode for the one install step.** Press `shift+tab` to cycle out
+   of auto mode, let Claude run the installer with a normal one-time permission
+   prompt, approve it, then re-enable auto mode.
+3. **Pre-authorize the command.** Add an allow rule for the specific installer
+   invocation to `~/.claude/settings.json` (or approve it once and choose
+   "always allow"), then re-run.
+
+Whichever you pick, the size question still applies — choose a size
+(`xsmall`/`small`/`medium`/`large`/`xlarge`); the installer does not silently
+assume one for you.

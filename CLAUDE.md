@@ -1,6 +1,14 @@
 # Claude Code Install Notes
 
-When asked to install this repo: ask the size, then run the installer.
+When asked to install this repo: **you MUST ask the size first, then run the
+installer.** Asking the size is non-negotiable — never install without an
+explicit size choice from the user.
+
+> **Auto-accept / acceptEdits / "Auto" mode is NOT an exception.** Those modes
+> auto-approve tool calls; they do **not** mean the user is absent. The user is
+> right there and can answer. Post the size menu and wait for their reply before
+> installing. Silently defaulting to `large` because a mode is "auto" is the
+> exact bug this note exists to prevent.
 
 **How to ask — output the menu below as a plain text message, directly.**
 Never call the AskUserQuestion tool, and never explain why (do not mention
@@ -50,9 +58,14 @@ Then install with that size:
 Shortcuts:
 
 - If the user already named a size (e.g. "install the XL one"), skip the menu
-  and install that size directly.
-- In a non-interactive session (`claude -p`, hooks, automation) where you can't
-  wait for a reply, install `large` directly.
+  and install that size directly. (This is the *only* way to skip the menu —
+  the user still chose a size.)
+- The silent-`large` fallback applies to **exactly one** case: a truly headless
+  one-shot run (`claude -p` / a hook / a cron job) where there is **no channel
+  to receive a human reply at all**. Being in auto-accept / "Auto" mode does
+  **not** qualify — in those modes you can and must still ask. When you do use
+  the fallback, say so: tell the user you defaulted to `large` because the
+  session was headless, and how to reinstall with another size.
 
 **After installing**, tell the user (in their language):
 
@@ -66,3 +79,18 @@ Shortcuts:
 The installer copies the statusline script into `~/.claude/awesome-statusline.*`,
 updates `~/.claude/settings.json`, and makes a timestamped backup before
 changing existing settings.
+
+## If "auto mode" blocks the install
+
+In auto-accept ("auto") mode you may correctly decline to silently run the
+installer — it fetches third-party code and wires it to run on every launch,
+which shouldn't be auto-approved. Don't just stop: still ask the size, then tell
+the user how to proceed (point them at `TROUBLESHOOTING.md` → "auto mode blocks
+the install"). The cleanest path is to have them run it themselves with the `!`
+prefix so the size prompt and output flow into the session:
+
+- macOS / Linux: `! bash install.sh <size>`
+- Windows: `! irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex`
+
+Or they can leave auto mode (`shift+tab`) for the single install step and
+approve the one-time permission prompt.

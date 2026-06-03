@@ -325,20 +325,20 @@ switch ($Mode) {
     [Console]::WriteLine("$Line2$ClearLine")
   }
   'small' {
-    $Line1 = "$ModelDisplay | $StyleDisplay | $DirDisplay$BranchDisplay"
-    $Line2 = "🧠 Context $(Bar $ContextPct 10 'context') ${ContextPct}% | 5H $(Bar $FiveHourPct 10 '5h') ${FiveHourPct}% | 7D $(Bar $SevenDayPct 10 '7d') ${SevenDayPct}%"
+    $Line1 = "$ModelDisplay │ $StyleDisplay │ $DirDisplay$BranchDisplay"
+    $Line2 = "🧠 Context $(Bar $ContextPct 10 'context') ${ContextPct}% │ 5H $(Bar $FiveHourPct 10 '5h') ${FiveHourPct}% │ 7D $(Bar $SevenDayPct 10 '7d') ${SevenDayPct}%"
     if (-not $HasRateLimits) { $Line2 += " $($C.Overlay)(loading..)$Reset" }
     [Console]::WriteLine("$Line1$ClearLine")
     [Console]::WriteLine("$Line2$ClearLine")
   }
   'medium' {
-    $Line1 = "$ModelDisplay | $GitStatus | $EnvDisplay | $StyleDisplay"
+    $Line1 = "$ModelDisplay │ $GitStatus │ $EnvDisplay │ $StyleDisplay"
     $Line2 = "$DirDisplay$BranchDisplay"
     $Line3 = "📝 $($C.Pink)Context$Reset $(Bar $ContextPct 40 'context') $Bold${ContextPct}% used$Reset"
     $Line4 = if ($HasRateLimits) {
-      "🚀 Usage 5H $(Bar $FiveHourPct 10 '5h') ${FiveHourPct}% | 7D $(Bar $SevenDayPct 10 '7d') ${SevenDayPct}%"
+      "🚀 Usage 5H $(Bar $FiveHourPct 10 '5h') ${FiveHourPct}% │ 7D $(Bar $SevenDayPct 10 '7d') ${SevenDayPct}%"
     } else {
-      "🚀 Usage 5H $(Bar 0 10 '5h') 0% | 7D $(Bar 0 10 '7d') 0% $($C.Overlay)(loading..)$Reset"
+      "🚀 Usage 5H $(Bar 0 10 '5h') 0% │ 7D $(Bar 0 10 '7d') 0% $($C.Overlay)(loading..)$Reset"
     }
     [Console]::WriteLine("$Line1$ClearLine")
     [Console]::WriteLine("$Line2$ClearLine")
@@ -346,8 +346,8 @@ switch ($Mode) {
     [Console]::WriteLine("$Line4$ClearLine")
   }
   'xlarge' {
-    $Line1 = "$ModelDisplay | $StyleDisplay | $GitStatus | $EnvDisplay"
-    $Line2 = "$DirDisplay$BranchDisplay | $CostDisplay | $DurationDisplay"
+    $Line1 = "$ModelDisplay │ $StyleDisplay │ $GitStatus │ $EnvDisplay"
+    $Line2 = "$DirDisplay$BranchDisplay │ $CostDisplay │ $DurationDisplay"
     $Line3 = "🧠 $($C.Pink)Context$Reset  $(Bar $ContextPct 40 'context') $Bold${ContextPct}% used$Reset (${CurrentK}k/${ContextK}k)"
     if ($HasRateLimits) {
       $Line4 = "🚀 $($C.Lavender)5H Limit$Reset $(Bar $FiveHourPct 40 '5h') $Bold${FiveHourPct}%$Reset (Resets in $(Format-Remaining $FiveHourReset))"
@@ -363,8 +363,8 @@ switch ($Mode) {
     [Console]::WriteLine("$Line5$ClearLine")
   }
   default {
-    $Line1 = "$ModelDisplay | $GitStatus | $EnvDisplay | $StyleDisplay"
-    $Line2 = "$DirDisplay$BranchDisplay | $CostDisplay | $DurationDisplay"
+    $Line1 = "$ModelDisplay │ $GitStatus │ $EnvDisplay │ $StyleDisplay"
+    $Line2 = "$DirDisplay$BranchDisplay │ $CostDisplay │ $DurationDisplay"
     $Line3 = "🧠 $($C.Pink)Context$Reset  $(Bar $ContextPct 20 'context') $Bold${ContextPct}% used$Reset (${CurrentK}k/${ContextK}k)"
     if ($HasRateLimits) {
       $Line4 = "🚀 $($C.Lavender)Usage 5H$Reset $(Bar $FiveHourPct 20 '5h') $Bold${FiveHourPct}%$Reset (Reset $(Format-Remaining $FiveHourReset))"
