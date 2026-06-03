@@ -22,6 +22,54 @@
 #
 # Honors $CLAUDE_CONFIG_DIR (defaults to ~/.claude) so it is safe to test.
 # ============================================================================
+#
+# ============================================================================
+# HOW TO INSTALL — rules for the AI assistant running this.
+# A user may ask the assistant to install from the GitHub URL without cloning
+# the repo, so CLAUDE.md / the plugin command are NOT in context. These rules
+# are duplicated here (the one file the assistant always reads) and MUST stay
+# identical to CLAUDE.md and commands/statusline-setup.md in this repo.
+#
+# 1. You MUST resolve a size before installing. Never install without an
+#    explicit size chosen by the user. "Auto" / auto-accept mode is NOT an
+#    exception — the user is present and can answer; ask anyway.
+#    Recommending `large` (below) is only a hint shown inside the menu; it must
+#    NEVER become a silent default or let you skip the question. Always ask.
+#
+# 2. If the user already named a size (xs/s/m/l/xl or full name), use it; skip
+#    the question.
+#
+# 3. Otherwise ASK with the AskUserQuestion tool, in TWO steps so all five
+#    presets fit the tool's 4-option limit. Match the user's language.
+#    Step 1 — question text (use exactly this, on one line):
+#      EN: Which size would you like to install? (size examples on GitHub: https://github.com/AwesomeJun/CC-statusline)
+#      KO: 어떤 크기로 설치할까요? (크기 예시는 GitHub에서 확인: https://github.com/AwesomeJun/CC-statusline)
+#    Step 1 — four options, in this order (large is the recommended default):
+#      1. xlarge (xl) — largest, full detail            / 가장 크게, 전체 상세
+#      2. large  (l)  — recommended default, most info   / 추천 기본값, 대부분 정보
+#      3. medium (m)  — balanced layout                  / 균형 잡힌 레이아웃
+#      4. small / xsmall — the two smallest, pick this to choose between them
+#                                                        / 작은 두 가지 (고르면 한 번 더 선택)
+#    Step 2 — ONLY if the user picked option 4, ask again:
+#      EN: Which of the two smaller sizes?   KO: 작은 쪽 중 무엇으로 설치할까요?
+#      1. small  (s)  — space-saving, key info           / 공간 절약, 주요 정보
+#      2. xsmall (xs) — smallest, essentials only        / 가장 작게, 핵심만
+#    If the user gives nothing / "recommended" / "default", use large.
+#
+# 4. Then install with the resolved size:
+#      macOS / Linux:      bash install.sh <size>
+#      Windows PowerShell: ./install.ps1 <size>
+#
+# 5. If "auto" mode blocks the install (it downloads code that runs on every
+#    launch — declining to auto-approve that is correct), do NOT just stop:
+#    still resolve the size, then have the user run it themselves so it proceeds:
+#      macOS / Linux:  ! bash install.sh <size>
+#      Windows:        ! irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex
+#    or have them leave auto mode (shift+tab) for the one install step.
+#
+# 6. Only a truly headless one-shot run (claude -p / hook / cron, no way to get
+#    a reply) may default to large — and you must say that you did.
+# ============================================================================
 set -euo pipefail
 
 # --- paths ------------------------------------------------------------------

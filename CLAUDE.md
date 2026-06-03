@@ -1,96 +1,76 @@
 # Claude Code Install Notes
 
-When asked to install this repo: **you MUST ask the size first, then run the
-installer.** Asking the size is non-negotiable — never install without an
-explicit size choice from the user.
+When asked to install this repo, follow the rules below. They are the single
+canonical install/size rules for this project and are **duplicated verbatim** in
+`commands/statusline-setup.md` and in the header comments of `install.sh` /
+`install.ps1` (a user may install straight from the GitHub URL without cloning,
+so this file is often NOT in context — the installer scripts are the one place
+that always is). If you change these rules, change them in all four places and
+keep them identical.
 
-> **Auto-accept / acceptEdits / "Auto" mode is NOT an exception.** Those modes
-> auto-approve tool calls; they do **not** mean the user is absent. The user is
-> right there and can answer. Post the size menu and wait for their reply before
-> installing. Silently defaulting to `large` because a mode is "auto" is the
-> exact bug this note exists to prevent.
+## How to ask the size
 
-**How to ask — output the menu below as a plain text message, directly.**
-Never call the AskUserQuestion tool, and never explain why (do not mention
-tools, widgets, option limits, or "5 presets won't fit"). No preamble — just
-post the menu. Copy it verbatim; don't reword the lines.
+1. You **MUST** resolve a size before installing. **Never install without an
+   explicit size chosen by the user.** "Auto" / auto-accept mode is **NOT** an
+   exception — the user is present and can answer; ask anyway. Recommending
+   `large` (below) is only a hint shown inside the menu; it must **never** become
+   a silent default or let you skip the question. Always ask.
 
-English:
+2. If the user already named a size (`xs`/`s`/`m`/`l`/`xl` or full name), use it
+   and skip the question.
 
-```
-Which size would you like to install? (size examples on GitHub: https://github.com/AwesomeJun/CC-statusline)
+3. Otherwise **ask with the AskUserQuestion tool, in TWO steps** so all five
+   presets fit the tool's 4-option limit. Match the user's language.
 
-  1. xsmall (xs) — smallest, essentials only
-  2. small  (s)  — space-saving, key info
-  3. medium (m)  — balanced layout
-  4. large  (l)  — recommended default, shows the most info
-  5. xlarge (xl) — largest, full detail
+   **Step 1 — question text:**
+   - EN: `Which size would you like to install? (size examples on GitHub: https://github.com/AwesomeJun/CC-statusline)`
+   - KO: `어떤 크기로 설치할까요? (크기 예시는 GitHub에서 확인: https://github.com/AwesomeJun/CC-statusline)`
 
-Reply with a number or name. If unsure, large (4) is recommended. [default: large]
-```
+   **Step 1 — four options, in this order** (large is the recommended default):
+   1. `xlarge` (xl) — largest, full detail / 가장 크게, 전체 상세
+   2. `large` (l) — recommended default, most info / 추천 기본값, 대부분 정보
+   3. `medium` (m) — balanced layout / 균형 잡힌 레이아웃
+   4. `small` / `xsmall` — the two smallest; pick this to choose between them / 작은 두 가지 (고르면 한 번 더 선택)
 
-Korean:
+   **Step 2 — ONLY if the user picked option 4**, ask again:
+   - EN: `Which of the two smaller sizes?` · KO: `작은 쪽 중 무엇으로 설치할까요?`
+   1. `small` (s) — space-saving, key info / 공간 절약, 주요 정보
+   2. `xsmall` (xs) — smallest, essentials only / 가장 작게, 핵심만
 
-```
-어떤 크기로 설치할까요? (크기 예시는 GitHub에서 확인: https://github.com/AwesomeJun/CC-statusline)
+   If the user gives nothing / "recommended" / "default", use `large`.
 
-  1. xsmall (xs) — 가장 작게, 핵심만
-  2. small  (s)  — 공간 절약, 주요 정보
-  3. medium (m)  — 균형 잡힌 레이아웃
-  4. large  (l)  — 추천 기본값, 대부분의 정보 표시
-  5. xlarge (xl) — 가장 크게, 전체 상세
+4. Then install with the resolved size:
+   - macOS / Linux: `bash install.sh <size>`
+   - Windows PowerShell: `./install.ps1 <size>`
 
-번호나 이름으로 답해 주세요. 잘 모르겠으면 large(4)를 추천합니다. [기본값: large]
-```
+## If "auto mode" blocks the install
 
-**Default to the English block.** Use the Korean block only when the user is
-actually writing to you in Korean.
+In auto-accept ("auto") mode you may correctly decline to silently run the
+installer — it fetches third-party code and wires it to run on every launch,
+which shouldn't be auto-approved. Don't just stop: still resolve the size
+(rules above), then have the user run it themselves so it proceeds:
 
-The reply maps to: `1`/`xs` → xsmall, `2`/`s` → small, `3`/`m` → medium,
-`4`/`l` → large, `5`/`xl` → xlarge. An empty reply or "recommended"/"default"
-means large.
+- macOS / Linux: `! bash install.sh <size>`
+- Windows: `! irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex`
 
-Then install with that size:
+Or have them leave auto mode (`shift+tab`) for the one install step and approve
+the one-time permission prompt. See `TROUBLESHOOTING.md` → "auto mode blocks the
+install".
 
-- macOS / Linux: `bash install.sh <size>`
-- Windows PowerShell: `./install.ps1 <size>`
+Only a truly headless one-shot run (`claude -p` / a hook / cron — no channel to
+receive a reply) may default to `large`, and you must say that you did.
 
-Shortcuts:
+## After installing
 
-- If the user already named a size (e.g. "install the XL one"), skip the menu
-  and install that size directly. (This is the *only* way to skip the menu —
-  the user still chose a size.)
-- The silent-`large` fallback applies to **exactly one** case: a truly headless
-  one-shot run (`claude -p` / a hook / a cron job) where there is **no channel
-  to receive a human reply at all**. Being in auto-accept / "Auto" mode does
-  **not** qualify — in those modes you can and must still ask. When you do use
-  the fallback, say so: tell the user you defaulted to `large` because the
-  session was headless, and how to reinstall with another size.
-
-**After installing**, tell the user (in their language):
+Tell the user (in their language):
 
 1. It's done — restart/reload Claude Code to see it.
-2. To change size later, they can just give you this repo's GitHub URL again and
-   ask for the size they want — you'll reinstall. Do **not** print curl/CLI
-   commands for this; keep it natural-language.
+2. To change size later, they can give you this repo's GitHub URL again and ask
+   for the size they want — you'll reinstall. Don't print curl/CLI commands for
+   this; keep it natural-language.
 3. If they like Awesome Statusline, a GitHub star really helps —
    https://github.com/AwesomeJun/CC-statusline
 
 The installer copies the statusline script into `~/.claude/awesome-statusline.*`,
 updates `~/.claude/settings.json`, and makes a timestamped backup before
 changing existing settings.
-
-## If "auto mode" blocks the install
-
-In auto-accept ("auto") mode you may correctly decline to silently run the
-installer — it fetches third-party code and wires it to run on every launch,
-which shouldn't be auto-approved. Don't just stop: still ask the size, then tell
-the user how to proceed (point them at `TROUBLESHOOTING.md` → "auto mode blocks
-the install"). The cleanest path is to have them run it themselves with the `!`
-prefix so the size prompt and output flow into the session:
-
-- macOS / Linux: `! bash install.sh <size>`
-- Windows: `! irm https://raw.githubusercontent.com/AwesomeJun/CC-statusline/main/install.ps1 | iex`
-
-Or they can leave auto mode (`shift+tab`) for the single install step and
-approve the one-time permission prompt.
