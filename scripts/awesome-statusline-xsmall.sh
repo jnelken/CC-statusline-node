@@ -137,7 +137,7 @@ generate_bar() {
 
 # Model (short name, bold)
 SHORT_MODEL=$(echo "$MODEL" | sed 's/Claude //; s/ [0-9.]*//')
-MODEL_DISPLAY="🤖${BOLD}${C_TEAL}${SHORT_MODEL}${RESET}"
+MODEL_DISPLAY="🤖 ${BOLD}${C_TEAL}${SHORT_MODEL}${RESET}"
 
 # Reasoning effort + extended thinking (effort.level: low|medium|high|xhigh|max; absent if model lacks effort param)
 EFFORT=$(echo "$input" | jq -r '.effort.level // empty')
@@ -204,11 +204,11 @@ if [[ -n "$FIVE_HOUR_PCT" ]]; then
     FIVE_BAR=$(generate_bar "$FIVE_HOUR" 10 "5h")
     SEVEN_BAR=$(generate_bar "$SEVEN_DAY" 10 "7d")
 
-    LINE2="🧠${CTX_BAR} ${C_LAVENDER}5H${RESET}${FIVE_BAR} ${C_YELLOW}7D${RESET}${SEVEN_BAR}"
+    LINE2="🧠 ${CTX_BAR} ${C_LAVENDER}5H${RESET}${FIVE_BAR} ${C_YELLOW}7D${RESET}${SEVEN_BAR}"
 else
     FIVE_BAR=$(generate_bar 0 10 "5h")
     SEVEN_BAR=$(generate_bar 0 10 "7d")
-    LINE2="🧠${CTX_BAR} ${C_LAVENDER}5H${RESET}${FIVE_BAR} ${C_YELLOW}7D${RESET}${SEVEN_BAR} ${C_OVERLAY}(loading..)${RESET}"
+    LINE2="🧠 ${CTX_BAR} ${C_LAVENDER}5H${RESET}${FIVE_BAR} ${C_YELLOW}7D${RESET}${SEVEN_BAR} ${C_OVERLAY}(loading..)${RESET}"
 fi
 
 # ============================================================================
