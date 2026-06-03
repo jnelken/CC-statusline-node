@@ -5,29 +5,23 @@ argument-hint: "[xsmall|small|medium|large|xlarge]"
 
 Install (or switch) the Awesome Statusline for the user.
 
-## Pick the size first
+## Pick the size first — MANDATORY
 
-There are **five** size presets, smallest to largest: `xsmall` · `small` ·
-`medium` · `large` · `xlarge`.
+You **MUST** resolve the size before running the installer. Never install
+without an explicit size.
 
 - If the user gave a size in `$ARGUMENTS` (abbreviation `xs`/`s`/`m`/`l`/`xl` or
-  full name), skip the question and pass it straight through to the installer.
-- Otherwise, ask with **AskUserQuestion**. The tool allows at most 4 options, so
-  show the four smallest as options and route `xlarge` + customization through
-  the auto-provided **Other** choice:
-  - **Question text:** use the same wording as the installer (install.sh) prompt,
-    matching the user's language:
-    - Korean: "statusline을 어떤 사이즈로 설치할까요? (XSmall-Small-Medium-Large-XLarge, 예시는 github에서 확인)"
-    - English: "Which size would you like to install? (XSmall-Small-Medium-Large-XLarge; see examples on GitHub)"
-  - **Option 1 — `xsmall` (xs):** 2 lines, 10-block bars, minimal.
-  - **Option 2 — `small` (s):** 2 lines, 10-block bars, labels + %.
-  - **Option 3 — `medium` (m):** 4 lines, classic layout.
-  - **Option 4 — `large` (l) (Recommended):** 5 lines, 20-block bars, cost/time. This is the installer default.
-  - In the question text, tell the user that **`xlarge` (xl)** — 5 lines, 40-block
-    bars, full detail (git ahead/behind, env) — and any **customization** are
-    available by picking **Other** and typing the size (`xl`/`xlarge`) or request.
-- Pass the chosen size explicitly to the installer (this also avoids relying on
-  the installer's interactive prompt, which pipe-based installs can suppress).
+  full name), use it and skip the menu.
+- Otherwise, **ask the size using the exact method in this repo's `CLAUDE.md`**
+  ("Claude Code Install Notes" → the plain-text size menu). `CLAUDE.md` is the
+  single source of truth for *how* to ask — do not invent a different mechanism
+  here, so the two never drift apart.
+- Auto-accept / "Auto" mode is **not** a reason to skip the menu. Only a truly
+  headless run (`claude -p`, hook, cron — no way to receive a reply) may fall
+  back to `large`, and you must tell the user it defaulted.
+
+Pass the resolved size explicitly to the installer (this also avoids relying on
+the installer's own interactive prompt, which pipe-based installs can suppress).
 
 ## Run the installer
 
