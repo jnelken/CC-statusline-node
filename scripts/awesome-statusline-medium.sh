@@ -174,12 +174,13 @@ else
     GIT_STATUS="${C_OVERLAY}no git${RESET}"
 fi
 
-# Conda environment
+# Node.js version
 CONDA_ENV=""
-if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-    CONDA_ENV="${C_YELLOW}🐍 $CONDA_DEFAULT_ENV${RESET}"
+NODE_VER="$(node --version 2>/dev/null)"
+if [[ -n "$NODE_VER" ]]; then
+    CONDA_ENV="${C_YELLOW}⬢ $NODE_VER${RESET}"
 else
-    CONDA_ENV="${C_OVERLAY}no conda${RESET}"
+    CONDA_ENV="${C_OVERLAY}no node${RESET}"
 fi
 
 # Output style

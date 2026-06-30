@@ -1,22 +1,21 @@
 <div align="center">
 
-# ⚡ Awesome Statusline
+# ⚡ Awesome Statusline (Node.js Edition)
 
 **A beautiful statusline for [Claude Code](https://claude.com/claude-code) — context, usage limits, cost & reasoning `⚡effort`, all at a glance. One line to install on macOS, Linux & Windows.**
 
-[🇰🇷 한국어](README.ko.md) · [Quick Install](#-quick-install) · [Presets](#-five-presets) · [What it shows](#-what-it-shows) · [FAQ](#-faq)
+> **Node.js fork of [AwesomeJun/CC-statusline](https://github.com/AwesomeJun/CC-statusline).** Replaces the Python/conda environment indicator with the active **Node.js version** (`⬢ v22.x.x`) — a better fit for JavaScript/TypeScript projects.
 
-<img src="https://img.shields.io/github/stars/AwesomeJun/CC-statusline?style=flat-square&color=cba6f7" alt="Stars"/>
+[Quick Install](#-quick-install) · [Presets](#-five-presets) · [What it shows](#-what-it-shows) · [FAQ](#-faq)
+
 <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-89b4fa?style=flat-square" alt="Platforms"/>
 <img src="https://img.shields.io/badge/theme-Catppuccin-f5c2e7?style=flat-square" alt="Catppuccin"/>
-<img src="https://img.shields.io/badge/deps-auto--installed-a6e3a1?style=flat-square" alt="Zero config"/>
+<img src="https://img.shields.io/badge/runtime-Node.js-a6e3a1?style=flat-square" alt="Node.js"/>
 <img src="https://img.shields.io/badge/license-MIT-fab387?style=flat-square" alt="MIT"/>
 
 <br/><br/>
 
 <img src="assets/presets/presets.png" alt="Five presets — xsmall to xlarge, with live ⚡effort and 💡thinking" width="820"/>
-
-<sub>▶ <a href="https://awesomejun.github.io/CC-statusline/">Interactive live demo</a></sub>
 
 </div>
 
@@ -116,20 +115,20 @@ small ─ 2 lines
 🧠 Context ████░░░░░░ 43% │ 5H ████░░░░░░ 42% │ 7D ██░░░░░░░░ 18%
 
 medium ─ 4 lines
-🧠 Opus 4.8 ⚡high 💡 │ 🚧 dirty │ no conda │ 🎨 default
+🧠 Opus 4.8 ⚡high 💡 │ 🚧 dirty │ ⬢ v22.13.0 │ 🎨 default
 📂 ~/project 🌿(main)
 📝 Context █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used
 🚀 Usage 5H ████░░░░░░ 42% │ 7D ██░░░░░░░░ 18%
 
 large ─ 5 lines
-🤖 Opus 4.8 ⚡high 💡 │ 📝 +5 !12 │ 🐍 venv │ 🎨 default
+🤖 Opus 4.8 ⚡high 💡 │ 📝 +5 !12 │ ⬢ v22.13.0 │ 🎨 default
 📂 ~/project 🌿(main) │ 💰 1.23$ │ ⏰ 1h2m
 🧠 Context  █████████░░░░░░░░░░░ 43% used (87k/200k)
 🚀 Usage 5H ████████░░░░░░░░░░░░ 42% (Reset 2h15m left)
 ⭐ Usage 7D ████░░░░░░░░░░░░░░░░ 18% (Reset Thu 19:00)
 
 xlarge ─ 5 lines
-🤖 Opus 4.8 ⚡high 💡 │ 🎨 default │ 📝 dirty +5 !12 │ 🐍 venv
+🤖 Opus 4.8 ⚡high 💡 │ 🎨 default │ 📝 dirty +5 !12 │ ⬢ v22.13.0
 📂 ~/project 🌿(main) │ 💰 1.23$ │ ⏰ 1h2m
 🧠 Context  █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 43% used (87k/200k)
 🚀 5H Limit █████████████████░░░░░░░░░░░░░░░░░░░░░░░ 42% (Resets in 2h15m)
@@ -149,7 +148,7 @@ xlarge ─ 5 lines
 | 💡 **Thinking** | Extended thinking is on for the session |
 | 🎨 **Style** | Active output style |
 | 🌿 **Git** | Branch, dirty/clean, ahead ↑ / behind ↓ (xlarge) |
-| 🐍 **Env** | Active conda / virtualenv |
+| ⬢ **Node** | Active Node.js version |
 | 🧠 **Context** | Context-window usage bar with token count |
 | 💰 **Cost / ⏰ Time** | Session cost (USD) and duration |
 | 🚀 **5h / 🌟 7d** | Usage-limit bars + reset time (Pro/Max, from the official rate-limit API) |

@@ -220,12 +220,13 @@ else
     GIT_STATUS_DISPLAY="$(cat_overlay)no git${RESET}"
 fi
 
-# Conda env
+# Node.js version
 ENV_DISPLAY=""
-if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-    ENV_DISPLAY="🐍 $(cat_pink)${CONDA_DEFAULT_ENV}${RESET}"
+NODE_VER="$(node --version 2>/dev/null)"
+if [[ -n "$NODE_VER" ]]; then
+    ENV_DISPLAY="⬢ $(cat_pink)${NODE_VER}${RESET}"
 else
-    ENV_DISPLAY="$(cat_overlay)no env${RESET}"
+    ENV_DISPLAY="$(cat_overlay)no node${RESET}"
 fi
 
 # Build Line 1: Model | Style | Git | Env

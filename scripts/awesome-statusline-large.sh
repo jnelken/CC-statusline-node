@@ -175,12 +175,13 @@ else
     GIT_STATUS_DISPLAY="$(cat_overlay)no git${RESET}"
 fi
 
-# Conda env (Catppuccin Mocha Green)
+# Node.js version (Catppuccin Mocha Green)
 ENV_DISPLAY=""
-if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-    ENV_DISPLAY="🐍 $(cat_green)${CONDA_DEFAULT_ENV}${RESET}"
+NODE_VER="$(node --version 2>/dev/null)"
+if [[ -n "$NODE_VER" ]]; then
+    ENV_DISPLAY="⬢ $(cat_green)${NODE_VER}${RESET}"
 else
-    ENV_DISPLAY="$(cat_overlay)no env${RESET}"
+    ENV_DISPLAY="$(cat_overlay)no node${RESET}"
 fi
 
 # Output style
