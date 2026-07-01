@@ -53,59 +53,60 @@ latte_yellow() { echo -e "\033[38;2;223;142;29m"; }
 # ============================================================================
 # Gradient Functions
 # ============================================================================
+# Unified gradient: Green (0%) → Yellow (75%) → Red (100%)
+get_unified_gradient_color() {
+    local pct=$1
+    local r g b
+
+    if [[ $pct -lt 75 ]]; then
+        # Green (166;227;161) → Yellow (249;226;175)
+        local t=$((pct * 100 / 75))
+        r=$((166 + (249 - 166) * t / 100))
+        g=$((227 + (226 - 227) * t / 100))
+        b=$((161 + (175 - 161) * t / 100))
+    else
+        # Yellow (249;226;175) → Red (210;15;57)
+        local t=$(((pct - 75) * 100 / 25))
+        r=$((249 + (210 - 249) * t / 100))
+        g=$((226 + (15 - 226) * t / 100))
+        b=$((175 + (57 - 175) * t / 100))
+    fi
+    echo "$r;$g;$b"
+}
+
+
+# Usage gradient: Blue (0%) → Purple (75%) → Red (100%)
+get_usage_unified_gradient_color() {
+    local pct=$1
+    local r g b
+
+    if [[ $pct -lt 75 ]]; then
+        # Blue (137;180;250) → Purple (203;166;247)
+        local t=$((pct * 100 / 75))
+        r=$((137 + (203 - 137) * t / 100))
+        g=$((180 + (166 - 180) * t / 100))
+        b=$((250 + (247 - 250) * t / 100))
+    else
+        # Purple (203;166;247) → Red (210;15;57)
+        local t=$(((pct - 75) * 100 / 25))
+        r=$((203 + (210 - 203) * t / 100))
+        g=$((166 + (15 - 166) * t / 100))
+        b=$((247 + (57 - 247) * t / 100))
+    fi
+    echo "$r;$g;$b"
+}
+
+# Keep old functions for compatibility
 get_context_gradient_color() {
-    local pct=$1
-    local r g b
-    if [[ $pct -lt 30 ]]; then
-        local t=$((pct * 100 / 30))
-        r=$((245 + (230 - 245) * t / 100))
-        g=$((194 + (69 - 194) * t / 100))
-        b=$((231 + (83 - 231) * t / 100))
-    elif [[ $pct -lt 70 ]]; then
-        local t=$(((pct - 30) * 100 / 40))
-        r=$((230 + (210 - 230) * t / 100))
-        g=$((69 + (15 - 69) * t / 100))
-        b=$((83 + (57 - 83) * t / 100))
-    else
-        r=210; g=15; b=57
-    fi
-    echo "$r;$g;$b"
+    get_unified_gradient_color "$1"
 }
 
-# 5H: Mocha Lavender → Latte Blue → Latte Red
 get_usage_gradient_color() {
-    local pct=$1
-    local r g b
-    if [[ $pct -lt 50 ]]; then
-        local t=$((pct * 2))
-        r=$((180 + (30 - 180) * t / 100))
-        g=$((190 + (102 - 190) * t / 100))
-        b=$((254 + (245 - 254) * t / 100))
-    else
-        local t=$(((pct - 50) * 2))
-        r=$((30 + (210 - 30) * t / 100))
-        g=$((102 + (15 - 102) * t / 100))
-        b=$((245 + (57 - 245) * t / 100))
-    fi
-    echo "$r;$g;$b"
+    get_usage_unified_gradient_color "$1"
 }
 
-# 7D: Mocha Yellow → Latte Peach → Latte Red
 get_usage_7d_gradient_color() {
-    local pct=$1
-    local r g b
-    if [[ $pct -lt 50 ]]; then
-        local t=$((pct * 2))
-        r=$((249 + (254 - 249) * t / 100))
-        g=$((226 + (100 - 226) * t / 100))
-        b=$((175 + (11 - 175) * t / 100))
-    else
-        local t=$(((pct - 50) * 2))
-        r=$((254 + (210 - 254) * t / 100))
-        g=$((100 + (15 - 100) * t / 100))
-        b=$((11 + (57 - 11) * t / 100))
-    fi
-    echo "$r;$g;$b"
+    get_usage_unified_gradient_color "$1"
 }
 
 generate_bar() {
@@ -194,8 +195,22 @@ LINE1="${MODEL_DISPLAY} │ ${GIT_STATUS_DISPLAY} │ ${ENV_DISPLAY} │ ${STYLE
 # Line 2: Directory + Branch | Cost | Duration
 # ============================================================================
 
-# Directory (full path, no ~)
-DIR_DISPLAY="📂 $(cat_subtext)${CURRENT_DIR}${RESET}"
+# Directory: shorten UUIDs, show just folder name
+shorten_directory_path() {
+    local path="$1"
+    # Check if path contains a UUID pattern (worktrees)
+    if [[ $path =~ /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/(.+)$ ]]; then
+        # Extract folder name after UUID
+        local folder="${BASH_REMATCH[2]}"
+        echo "$folder"
+    else
+        # No UUID, show full path
+        echo "$path"
+    fi
+}
+
+SHORTENED_DIR=$(shorten_directory_path "$CURRENT_DIR")
+DIR_DISPLAY="⽊ $(latte_yellow)${SHORTENED_DIR}${RESET}"
 
 # Git branch
 BRANCH_DISPLAY=""
@@ -209,9 +224,9 @@ fi
 COST_DISPLAY=""
 if [[ "$TOTAL_COST" != "0" && -n "$TOTAL_COST" ]]; then
     COST_FMT=$(printf "%.2f" "$TOTAL_COST")
-    COST_DISPLAY="💰 $(cat_yellow)${COST_FMT}\$${RESET}"
+    COST_DISPLAY="💰 $(cat_subtext)${COST_FMT}\$${RESET}"
 else
-    COST_DISPLAY="💰 $(cat_overlay)0.00\$${RESET}"
+    COST_DISPLAY="💰 $(cat_subtext)0.00\$${RESET}"
 fi
 
 # Duration
@@ -251,8 +266,7 @@ TOKENS_K=$((CURRENT_TOKENS / 1000))
 CONTEXT_K=$((CONTEXT_SIZE / 1000))
 
 CTX_BAR=$(generate_bar "$CONTEXT_PERCENT" 20 "context")
-CTX_END_COLOR=$(get_context_gradient_color "$CONTEXT_PERCENT")
-LINE3="🧠 $(cat_pink)Context${RESET}  ${CTX_BAR} ${BOLD}\033[38;2;${CTX_END_COLOR}m${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
+LINE3="🧠 $(cat_pink)Context${RESET}  ${CTX_BAR} ${BOLD}$(cat_subtext)${CONTEXT_PERCENT}% used${RESET} (${TOKENS_K}k/${CONTEXT_K}k)"
 
 # ============================================================================
 # Lines 4-5: Usage 5H and 7D (20 blocks)
@@ -297,11 +311,8 @@ if [[ -n "$FIVE_HOUR_PCT" ]]; then
     FIVE_BAR=$(generate_bar "$FIVE_HOUR" 20 "5h")
     SEVEN_BAR=$(generate_bar "$SEVEN_DAY" 20 "7d")
 
-    FIVE_END_COLOR=$(get_usage_gradient_color "$FIVE_HOUR")
-    SEVEN_END_COLOR=$(get_usage_7d_gradient_color "$SEVEN_DAY")
-
-    LINE4="🚀 $(cat_lavender)Usage 5H${RESET} ${FIVE_BAR} ${BOLD}\033[38;2;${FIVE_END_COLOR}m${FIVE_HOUR}%${RESET} (Reset ${FIVE_RESET_FMT})"
-    LINE5="⭐ $(cat_yellow)Usage 7D${RESET} ${SEVEN_BAR} ${BOLD}\033[38;2;${SEVEN_END_COLOR}m${SEVEN_DAY}%${RESET} (Reset ${SEVEN_RESET_FMT})"
+    LINE4="🚀 $(cat_lavender)Usage 5H${RESET} ${FIVE_BAR} ${BOLD}$(cat_subtext)${FIVE_HOUR}%${RESET} (Reset ${FIVE_RESET_FMT})"
+    LINE5="⭐ $(cat_yellow)Usage 7D${RESET} ${SEVEN_BAR} ${BOLD}$(cat_subtext)${SEVEN_DAY}%${RESET} (Reset ${SEVEN_RESET_FMT})"
 else
     FIVE_BAR=$(generate_bar 0 20 "5h")
     SEVEN_BAR=$(generate_bar 0 20 "7d")
