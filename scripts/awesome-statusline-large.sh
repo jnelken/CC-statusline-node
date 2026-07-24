@@ -142,6 +142,27 @@ generate_bar() {
     echo -e "$bar$RESET"
 }
 
+# Gradient text: shade each character from one RGB color to another
+gradient_text() {
+    local text="$1"
+    local r1=$2 g1=$3 b1=$4
+    local r2=$5 g2=$6 b2=$7
+    local len=${#text}
+    local out="" t r g b ch
+
+    for ((i=0; i<len; i++)); do
+        ch="${text:$i:1}"
+        t=0
+        [[ $len -gt 1 ]] && t=$((i * 100 / (len - 1)))
+        r=$((r1 + (r2 - r1) * t / 100))
+        g=$((g1 + (g2 - g1) * t / 100))
+        b=$((b1 + (b2 - b1) * t / 100))
+        out+="\033[38;2;${r};${g};${b}m${ch}"
+    done
+
+    echo -e "${out}${RESET}"
+}
+
 # ============================================================================
 # Line 1: Model | Git Status | Env | Style
 # ============================================================================
@@ -210,13 +231,21 @@ shorten_directory_path() {
 }
 
 SHORTENED_DIR=$(shorten_directory_path "$CURRENT_DIR")
-DIR_DISPLAY="⽊ $(latte_yellow)${SHORTENED_DIR}${RESET}"
 
 # Git branch
-BRANCH_DISPLAY=""
+BRANCH=""
 cd "$CURRENT_DIR" 2>/dev/null
 if git rev-parse --git-dir > /dev/null 2>&1; then
     BRANCH=$(git branch --show-current 2>/dev/null)
+fi
+
+if [[ -n "$BRANCH" && "$BRANCH" == "$SHORTENED_DIR" ]]; then
+    # Worktree folder is named after its branch - collapse into one gradient indicator
+    DIR_DISPLAY="⽊ $(gradient_text "$SHORTENED_DIR" 223 142 29 64 160 43)"
+    BRANCH_DISPLAY=""
+else
+    DIR_DISPLAY="⽊ $(latte_yellow)${SHORTENED_DIR}${RESET}"
+    BRANCH_DISPLAY=""
     [[ -n "$BRANCH" ]] && BRANCH_DISPLAY=" $(latte_green)🌿(${BRANCH})${RESET}"
 fi
 
